@@ -1,64 +1,163 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../widgets/app_network_image.dart'; // adjust path
+import 'package:corehive_store/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/config/extension/space_extension.dart';
+import 'package:corehive_store/app/presentation/widgets/app_text.dart';
+import 'package:corehive_store/app/presentation/widgets/app_card.dart';
+import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final String? originalPrice;
+  final double? rating;
+  final int? reviewCount;
+  final bool isWishlisted;
+  final bool isOnSale;
+  final int? discountPercentage;
+  final VoidCallback? onTap;
+  final VoidCallback? onWishlistTap;
+  final VoidCallback? onAddToCart;
 
   const ProductCard({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
+    this.originalPrice,
+    this.rating,
+    this.reviewCount,
+    this.isWishlisted = false,
+    this.isOnSale = false,
+    this.discountPercentage,
+    this.onTap,
+    this.onWishlistTap,
+    this.onAddToCart,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              child: AppNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    // unified icon color
+    final iconColor = context.kPrimaryColor;
+
+    return Flexible(
+      child: AppCard(
+        backgroundColor: Colors.white,
+        borderColor: Colors.transparent,
+        padding: const EdgeInsets.all(8),
+        onTap: onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Bigger image with smaller buttons
+            Stack(
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Container(
+                  height: 180, // bigger image
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: context.kTextFieldColor,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: AppNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Text(price, style: const TextStyle(color: Colors.grey)),
+                if (isOnSale && discountPercentage != null)
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: context.kErrorColor,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: AppText(
+                        text: '-$discountPercentage%',
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                // Bottom buttons
               ],
             ),
-          ),
-        ],
+            8.ph,
+            // Title
+            AppText(
+              text: title,
+              fontSize: 13.5,
+              fontWeight: FontWeight.w600,
+              color: context.kTextColor,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            4.ph,
+            // Rating
+            if (rating != null && reviewCount != null)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.star, color: iconColor, size: 12),
+                  4.pw,
+                  Flexible(
+                    child: AppText(
+                      text: rating.toString(),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: context.kTextColor,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  4.pw,
+                  Flexible(
+                    child: AppText(
+                      text: '($reviewCount)',
+                      fontSize: 10,
+                      color: context.kHintTextColor,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            8.ph,
+            // Price
+            Row(
+              children: [
+                Flexible(
+                  child: AppText(
+                    text: price,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: iconColor,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (originalPrice != null) ...[
+                  8.pw,
+                  Flexible(
+                    child: AppText(
+                      text: originalPrice!,
+                      fontSize: 12,
+                      color: context.kHintTextColor,
+                      lineThrough: true,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

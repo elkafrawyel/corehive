@@ -47,16 +47,18 @@ class AppButton extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (icon != null) ...[
-          icon!,
-          const SizedBox(width: 8),
-        ],
+       
         AppText(
           text: text,
           color: textColor ?? context.kColorOnPrimary,
           fontSize: fontSize ?? 16,
           fontWeight: FontWeight.w700,
         ),
+         if (icon != null) ...[
+          const SizedBox(width: 8),
+
+          icon!,
+        ],
       ],
     );
 
