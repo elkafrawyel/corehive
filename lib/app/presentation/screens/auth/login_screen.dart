@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:luma/app/config/res.dart';
-import 'package:luma/app/presentation/screens/auth/controllers/auth_binding.dart';
-import 'package:luma/app/presentation/screens/auth/controllers/auth_controller.dart';
-import 'package:luma/app/presentation/screens/auth/register_screen.dart';
+import 'package:corehive_store/app/config/res.dart';
+import 'package:corehive_store/app/presentation/screens/auth/controllers/auth_binding.dart';
+import 'package:corehive_store/app/presentation/screens/auth/controllers/auth_controller.dart';
+import 'package:corehive_store/app/presentation/screens/auth/register_screen.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/app_text_field/app_text_field.dart';

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:luma/app/presentation/screens/main/controllers/nav_controller.dart';
-import 'package:luma/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
-import 'package:luma/app/presentation/screens/main/pages/profile/controller/profile_controller.dart';
+import 'package:corehive_store/app/presentation/screens/main/controllers/nav_controller.dart';
+import 'package:corehive_store/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
+import 'package:corehive_store/app/presentation/screens/main/pages/profile/controller/profile_controller.dart';
 
 class MainBinding extends Bindings {
   @override

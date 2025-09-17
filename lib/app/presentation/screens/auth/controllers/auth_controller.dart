@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:luma/app/config/app_loader.dart';
+import 'package:corehive_store/app/config/app_loader.dart';
 import '../../../../config/information_viewer.dart';
 import '../../../../data/api_requests/register_request.dart';
 import '../../../../domain/repositories/auth_repository.dart';

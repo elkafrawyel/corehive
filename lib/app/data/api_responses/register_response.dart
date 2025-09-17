@@ -1,4 +1,4 @@
-import 'package:luma/app/data/models/user_model.dart';
+import 'package:corehive_store/app/data/models/user_model.dart';
 
 class RegisterResponse {
   final bool success;

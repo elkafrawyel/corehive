@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:oktoast/oktoast.dart' as ok_toast;
 
 import '../presentation/widgets/app_text.dart';

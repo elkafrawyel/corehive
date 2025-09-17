@@ -10,7 +10,7 @@ class HomeHeader extends StatelessWidget {
       child: Row(
         children: [
           const Text(
-            "Luma Store",
+            "Corehive Store",
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,

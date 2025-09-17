@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
 
 class AppCard extends StatefulWidget {
   final Widget child;

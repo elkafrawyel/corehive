@@ -12,9 +12,9 @@ import '../helpers/logging_helper.dart';
 
 
 class NotificationsService {
-  static const String _channelId = 'com.luma.app';
-  static const String _channelName = 'Luma Notifications';
-  static const String _channelDescription = 'Notifications for Luma app';
+  static const String _channelId = 'com.corehive_store.app';
+  static const String _channelName = 'corehive_store Notifications';
+  static const String _channelDescription = 'Notifications for corehive_store app';
 
   static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   static final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =

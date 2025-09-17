@@ -1,4 +1,4 @@
-name: luma
+name: corehive_store
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -9,6 +9,52 @@ environment:
 
 dependencies:
   flutter:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     sdk: flutter
 
   cupertino_icons: ^1.0.8
@@ -36,6 +82,7 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   flutter_launcher_icons: ^0.14.4
   font_awesome_flutter: ^10.9.1
+  rename: ^3.1.0
 
 
 

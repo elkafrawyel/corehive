@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
-import 'package:luma/app/config/theme/theme_controller.dart';
-import 'package:luma/app/presentation/screens/main/pages/profile/controller/profile_controller.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/config/theme/theme_controller.dart';
 import '../../../../../widgets/app_network_image.dart';
 import '../../../../../widgets/app_text.dart';
 import '../components/profile_tile.dart';
 import '../components/profile_tile_switch.dart';
+import '../controller/profile_controller.dart';
 
 class ProfileLoggedInPage extends StatelessWidget {
   const ProfileLoggedInPage({super.key});

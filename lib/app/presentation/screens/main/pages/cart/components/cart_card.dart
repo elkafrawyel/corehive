@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
-import 'package:luma/app/domain/entities/cart_model.dart';
-import 'package:luma/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
-import 'package:luma/app/presentation/widgets/app_card.dart';
-import 'package:luma/app/config/res.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/domain/entities/cart_model.dart';
 
+import '../../../../../widgets/app_card.dart';
 import '../../../../../widgets/app_network_image.dart';
+import '../controller/cart_controller.dart';
 
 class CartCard extends StatefulWidget {
   final CartItem item;

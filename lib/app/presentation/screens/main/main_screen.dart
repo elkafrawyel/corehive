@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
 
 import 'controllers/nav_controller.dart';
 import 'pages/cart/cart_page.dart';

@@ -1,4 +1,4 @@
-# luma
+# corehive_store
 
 A new Flutter project.
 

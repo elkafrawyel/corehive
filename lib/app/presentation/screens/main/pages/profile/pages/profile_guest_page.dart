@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
-import 'package:luma/app/presentation/screens/auth/controllers/auth_binding.dart';
-import 'package:luma/app/presentation/screens/auth/login_screen.dart';
-import 'package:luma/app/presentation/widgets/app_button.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/presentation/screens/auth/controllers/auth_binding.dart';
+import 'package:corehive_store/app/presentation/screens/auth/login_screen.dart';
+import 'package:corehive_store/app/presentation/widgets/app_button.dart';
 import '../../../../../../config/res.dart';
 import '../../../../../../config/theme/theme_controller.dart';
 import '../../../../../widgets/app_network_image.dart';

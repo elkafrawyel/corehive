@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:luma/app/config/extension/space_extension.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/config/extension/space_extension.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../../config/clients/storage/storage_client.dart';

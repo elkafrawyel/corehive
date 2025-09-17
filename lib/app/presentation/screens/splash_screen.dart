@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:luma/app/presentation/screens/main/controllers/main_binding.dart';
-import 'package:luma/app/presentation/screens/main/main_screen.dart';
-import 'package:luma/app/config/res.dart';
+import 'package:corehive_store/app/presentation/screens/main/controllers/main_binding.dart';
+import 'package:corehive_store/app/presentation/screens/main/main_screen.dart';
+import 'package:corehive_store/app/config/res.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

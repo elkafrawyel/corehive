@@ -16,12 +16,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.luma.store.luma"
+    namespace = "com.corehive.store.corehive"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "29.0.13599879"
 
     defaultConfig {
-        applicationId = "com.luma.store"
+        applicationId = "com.corehive.store"
         minSdk = 23
         targetSdk = 36
         versionCode = flutter.versionCode

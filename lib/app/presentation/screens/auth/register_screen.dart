@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:luma/app/config/clients/api/api_result.dart';
+import 'package:corehive_store/app/config/clients/api/api_result.dart';
 
 import '../../widgets/app_button.dart';
 import '../../widgets/app_text_field/app_text_field.dart';

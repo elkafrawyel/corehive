@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luma/app/config/theme/color_extension.dart';
+import 'package:corehive_store/app/config/theme/color_extension.dart';
 import '../../config/clients/storage/storage_client.dart';
 import '../../config/constants.dart';
 class AppText extends StatelessWidget {

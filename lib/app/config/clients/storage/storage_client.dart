@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:luma/app/config/clients/api/api_client.dart';
-import 'package:luma/app/config/helpers/logging_helper.dart';
+import 'package:corehive_store/app/config/clients/api/api_client.dart';
+import 'package:corehive_store/app/config/helpers/logging_helper.dart';
 
 enum StorageClientKeys {
   language, // String
