@@ -129,7 +129,7 @@ class AppColors extends ThemeExtension<AppColors> {
     // Warm off-white
     kTextColor: Color(0xFF2E2E2E),
     // Dark gray text
-    kColorOnPrimaryColor: Color(0xFF1E1E1E),
+    kColorOnPrimaryColor: Color(0xFFFFFFFF),
     // Text on yellow
     kHintColor: Color(0xFF9E9E9E),
     // Neutral gray for hints

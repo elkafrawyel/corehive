@@ -26,31 +26,29 @@ Future<T?> showAppModalBottomSheet<T>({
     enableDrag: enableDrag,
     barrierColor: barrierColor,
     builder: (BuildContext context) {
-      return SafeArea(
-        child: Padding(
-          // This ensures the sheet avoids the keyboard and fits content height
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: child,
-          ),
-        ),
-      )
+      return Padding(
+            // This ensures the sheet avoids the keyboard and fits content height
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: child,
+            ),
+          )
           .animate()
           .fade(
-        begin: 0,
-        end: 1,
-        curve: Curves.easeIn,
-        duration: const Duration(milliseconds: 200),
-      )
+            begin: 0,
+            end: 1,
+            curve: Curves.easeIn,
+            duration: const Duration(milliseconds: 200),
+          )
           .slide(
-        begin: const Offset(0, 1),
-        end: const Offset(0, 0),
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOutCubic,
-      );
+            begin: const Offset(0, 1),
+            end: const Offset(0, 0),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOutCubic,
+          );
     },
   );
 }

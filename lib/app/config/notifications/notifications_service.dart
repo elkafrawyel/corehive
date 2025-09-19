@@ -6,19 +6,18 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:logger/logger.dart';
-
 import '../helpers/logging_helper.dart';
-
 
 class NotificationsService {
   static const String _channelId = 'com.corehive_store.app';
   static const String _channelName = 'corehive_store Notifications';
-  static const String _channelDescription = 'Notifications for corehive_store app';
+  static const String _channelDescription =
+      'Notifications for corehive_store app';
 
-  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  static final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+  static final FirebaseMessaging _firebaseMessaging =
+      FirebaseMessaging.instance;
+  static final FlutterLocalNotificationsPlugin
+  _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
     await _firebaseMessaging.requestPermission(
@@ -29,7 +28,7 @@ class NotificationsService {
     );
 
     _firebaseMessaging.getToken().then(
-          (token) => AppLogger.log('📱 FIREBASE TOKEN: $token'),
+      (token) => AppLogger.log('📱 FIREBASE TOKEN: $token'),
     );
 
     _firebaseMessaging.getAPNSToken().then((token) {
@@ -51,13 +50,14 @@ class NotificationsService {
 
   Future<void> _initializeLocalNotifications() async {
     const AndroidInitializationSettings androidSettings =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    final DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
+    final DarwinInitializationSettings iosSettings =
+        DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
 
     final InitializationSettings settings = InitializationSettings(
       android: androidSettings,
@@ -72,8 +72,10 @@ class NotificationsService {
   }
 
   String? _getImageUrl(RemoteNotification notification) {
-    if (Platform.isIOS && notification.apple != null) return notification.apple?.imageUrl;
-    if (Platform.isAndroid && notification.android != null) return notification.android?.imageUrl;
+    if (Platform.isIOS && notification.apple != null)
+      return notification.apple?.imageUrl;
+    if (Platform.isAndroid && notification.android != null)
+      return notification.android?.imageUrl;
     return null;
   }
 
@@ -97,7 +99,9 @@ class NotificationsService {
     BigPictureStyleInformation? bigPicture;
     if (imageUrl != null) {
       final imagePath = await _downloadAndSaveFile(
-          imageUrl, 'notification_${DateTime.now().millisecondsSinceEpoch}.png');
+        imageUrl,
+        'notification_${DateTime.now().millisecondsSinceEpoch}.png',
+      );
       bigPicture = BigPictureStyleInformation(
         FilePathAndroidBitmap(imagePath),
         hideExpandedLargeIcon: true,

@@ -3,168 +3,153 @@ import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/config/extension/space_extension.dart';
 import 'package:corehive_store/app/presentation/widgets/app_text.dart';
 import 'package:corehive_store/app/presentation/widgets/app_card.dart';
-import 'package:corehive_store/app/presentation/widgets/app_button.dart';
+import 'package:corehive_store/app/presentation/screens/categories_details/category_details_screen.dart';
+import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
-class CategoryData {
-  final String name;
-  final IconData icon;
-  final Color color;
-  final int itemCount;
+// Removed old CategoryData class, now using _Category for grid
 
-  CategoryData({
-    required this.name,
-    required this.icon,
-    required this.color,
-    this.itemCount = 0,
-  });
-}
-
-class HomeCategories extends StatelessWidget {
+class HomeCategories extends StatefulWidget {
   HomeCategories({super.key});
 
-  final List<CategoryData> categories = [
-    CategoryData(
-      name: "Electronics",
-      icon: Icons.phone_android,
-      color: Color(0xFF4ECDC4),
-      itemCount: 1250,
-    ),
-    CategoryData(
-      name: "Fashion",
-      icon: Icons.checkroom,
-      color: Color(0xFFFF6B6B),
-      itemCount: 890,
-    ),
+  @override
+  State<HomeCategories> createState() => _HomeCategoriesState();
+}
 
-    CategoryData(
-      name: "Sports",
-      icon: Icons.sports_soccer,
-      color: Color(0xFFFF9F43),
-      itemCount: 420,
+class _HomeCategoriesState extends State<HomeCategories> {
+  final Map<String, List<String>> subCategoriesMap = const {
+    'Electronics': [
+      'Phones',
+      'Laptops',
+      'Cameras',
+      'Audio',
+      'Wearables',
+      'Accessories',
+    ],
+    'Clothing': ['Men', 'Women', 'Kids', 'Shoes', 'Accessories'],
+    'Home & Kitchen': [
+      'Furniture',
+      'Appliances',
+      'Cookware',
+      'Decor',
+      'Storage',
+    ],
+    'Beauty': ['Makeup', 'Skincare', 'Haircare', 'Fragrance', 'Tools'],
+    'Books': ['Fiction', 'Non-Fiction', 'Children', 'Comics', 'Textbooks'],
+    'Sports': ['Fitness', 'Outdoor', 'Team Sports', 'Equipment', 'Footwear'],
+    'Toys & Games': [
+      'Educational',
+      'Board Games',
+      'Action Figures',
+      'Puzzles',
+      'Outdoor Toys',
+    ],
+    'Health & Personal Care': [
+      'Supplements',
+      'Medical',
+      'Personal Hygiene',
+      'Wellness',
+      'Devices',
+    ],
+    'Automotive': ['Car Care', 'Accessories', 'Tools', 'Parts', 'Motorcycles'],
+    'Pet Supplies': ['Food', 'Toys', 'Grooming', 'Beds', 'Health'],
+  };
+  final List<_Category> categories = const [
+    _Category(
+      name: 'Electronics',
+      imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9',
     ),
-    CategoryData(
-      name: "Beauty",
-      icon: Icons.favorite,
-      color: Color(0xFF9B59B6),
-      itemCount: 380,
+    _Category(
+      name: 'Clothing',
+      imageUrl: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f',
     ),
-    CategoryData(
-      name: "Books",
-      icon: Icons.book,
-      color: Color(0xFF2ECC71),
-      itemCount: 1200,
+    _Category(
+      name: 'Home & Kitchen',
+      imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
     ),
-    CategoryData(
-      name: "Toys",
-      icon: Icons.toys,
-      color: Color(0xFFE74C3C),
-      itemCount: 280,
+    _Category(
+      name: 'Beauty',
+      imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2',
     ),
-    CategoryData(
-      name: "More",
-      icon: Icons.more_horiz,
-      color: Color(0xFF95A5A6),
-      itemCount: 0,
+    _Category(
+      name: 'Books',
+      imageUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794',
+    ),
+    _Category(
+      name: 'Sports',
+      imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
+    ),
+    _Category(
+      name: 'Toys & Games',
+      imageUrl: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
+    ),
+    _Category(
+      name: 'Health & Personal Care',
+      imageUrl: 'https://images.unsplash.com/photo-1504198453319-5ce911bafcde',
+    ),
+    _Category(
+      name: 'Automotive',
+      imageUrl: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e',
+    ),
+    _Category(
+      name: 'Pet Supplies',
+      imageUrl: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d',
     ),
   ];
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          // Categories horizontal list
-          SizedBox(
-            height: 100,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
-              separatorBuilder: (_, __) => 12.pw,
-              itemBuilder: (context, index) => _buildCategoryCard(context, categories[index]),
-            ),
-          ),
-          
-          16.ph,
-          
-          // View all categories button
-          SizedBox(
-            width: double.infinity,
-            child: AppButton(
-              text: 'View All Categories',
-              onPressed: () {
-                // Navigate to all categories
-              },
-              backgroundColor: context.kPrimaryColor,
-              textColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              radius: 12,
-              fontSize: 14,
-              fullWidth: true,
-              icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCategoryCard(BuildContext context, CategoryData category) {
     return SizedBox(
-      width: 80,
-      child: AppCard(
-        backgroundColor: Colors.white,
-        borderColor: Colors.transparent,
-        padding: const EdgeInsets.all(8),
-        onTap: () {
-          // Navigate to category
+      height: 100,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: categories.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 16),
+        itemBuilder: (context, index) {
+          final category = categories[index];
+          return GestureDetector(
+            onTap: () {
+              final subCats = subCategoriesMap[category.name] ?? [];
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: CategoryDetailsScreen(
+                  categoryName: category.name,
+                  subCategories: subCats,
+                ),
+                withNavBar: true,
+                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              );
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppNetworkImage(
+                  imageUrl: category.imageUrl,
+                  width: 60,
+                  height: 60,
+                  radius: 30,
+                  isCircular: true,
+                ),
+                const SizedBox(height: 8),
+                AppText(
+                  text: category.name,
+                  fontWeight: FontWeight.w600,
+                  color: context.kTextColor,
+                  fontSize: 13,
+                  centerText: true,
+                ),
+              ],
+            ),
+          );
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Icon container
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: category.color.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Icon(
-                category.icon,
-                color: category.color,
-                size: 20,
-              ),
-            ),
-            
-            6.ph,
-            
-            // Category name
-            AppText(
-              text: category.name,
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              color: context.kTextColor,
-              centerText: true,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            
-            // Item count (if available)
-            if (category.itemCount > 0) ...[
-              2.ph,
-              AppText(
-                text: '${category.itemCount}+',
-                fontSize: 8,
-                color: context.kHintTextColor,
-                centerText: true,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ],
-        ),
       ),
     );
   }
+}
+
+class _Category {
+  final String name;
+  final String imageUrl;
+
+  const _Category({required this.name, required this.imageUrl});
 }

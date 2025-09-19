@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:corehive_store/app/config/clients/api/api_result.dart';
-
 import '../../widgets/app_button.dart';
 import '../../widgets/app_text_field/app_text_field.dart';
 import '../../widgets/app_text_field/rules.dart';
@@ -25,9 +23,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Register"),
-      ),
+      appBar: AppBar(title: const Text("Register")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -72,13 +68,12 @@ class RegisterScreen extends StatelessWidget {
 
                 if (!isValid) return;
 
-                  controller.register(
+                controller.register(
                   name: nameController.text,
                   email: emailController.text,
                   phone: phoneController.text,
                   password: passwordController.text,
                 );
-
               },
             ),
             const SizedBox(height: 16),

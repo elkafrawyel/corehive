@@ -9,52 +9,6 @@ environment:
 
 dependencies:
   flutter:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     sdk: flutter
 
   cupertino_icons: ^1.0.8
@@ -83,6 +37,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   font_awesome_flutter: ^10.9.1
   rename: ^3.1.0
+  path_provider: ^2.1.5
+  persistent_bottom_nav_bar: ^6.2.1
 
 
 

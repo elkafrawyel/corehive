@@ -10,7 +10,8 @@ class RecentlyViewedSection extends StatelessWidget {
 
   final List<Map<String, dynamic>> recentlyViewed = const [
     {
-      'imageUrl': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9',
       'title': 'iPhone 14 Pro Max',
       'price': '\$999',
       'originalPrice': '\$1,199',
@@ -20,7 +21,8 @@ class RecentlyViewedSection extends StatelessWidget {
       'discountPercentage': 17,
     },
     {
-      'imageUrl': 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35f3',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1510557880182-3d4d3cba35f3',
       'title': 'Samsung Galaxy S23 Ultra',
       'price': '\$749',
       'originalPrice': '\$899',
@@ -30,7 +32,8 @@ class RecentlyViewedSection extends StatelessWidget {
       'discountPercentage': 17,
     },
     {
-      'imageUrl': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1598327105666-5b89351aff97',
       'title': 'Google Pixel 7 Pro',
       'price': '\$699',
       'originalPrice': '\$899',
@@ -40,7 +43,8 @@ class RecentlyViewedSection extends StatelessWidget {
       'discountPercentage': 22,
     },
     {
-      'imageUrl': 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1606813907291-d86efa9b94db',
       'title': 'Sony WH-1000XM4',
       'price': '\$299',
       'originalPrice': null,
@@ -74,16 +78,16 @@ class RecentlyViewedSection extends StatelessWidget {
               ),
               const Spacer(),
               AppText(
-                text: 'Clear All',
+                text: 'See All',
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: context.kHintTextColor,
               ),
             ],
           ),
-          
+
           12.ph,
-          
+
           SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.33,
             child: ListView.separated(

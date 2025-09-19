@@ -10,7 +10,6 @@ import 'components/flash_deals_section.dart';
 import 'components/quick_actions_section.dart';
 import 'components/brands_section.dart';
 import 'components/recently_viewed_section.dart';
-import 'components/recommendations_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -60,10 +59,6 @@ class _HomePageState extends State<HomePage>
               20.ph,
 
               BrandsSection(),
-
-              20.ph,
-
-              const RecommendationsSection(),
 
               20.ph,
 
