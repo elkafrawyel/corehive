@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import '../../../../../../domain/repositories/product_repository_base.dart';
 import '../../../../../../data/models/product_model.dart';
+import '../../../../../../data/repositories/product_repository.dart';
 
 class HomeController extends GetxController {
-  final ProductRepositoryBase productRepo;
+  final ProductRepository productRepo;
   HomeController({required this.productRepo});
 
   var products = <Product>[].obs;

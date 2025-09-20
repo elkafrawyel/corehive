@@ -5,6 +5,7 @@ import 'package:corehive_store/app/config/theme/color_extension.dart';
 
 import '../../../../../widgets/app_card.dart';
 import '../../../../../widgets/app_network_image.dart';
+import '../../../../../widgets/app_text.dart';
 import '../controller/cart_controller.dart';
 
 class CartCard extends StatefulWidget {
@@ -28,28 +29,22 @@ class _CartCardState extends State<CartCard>
       child: Row(
         children: [
           // ✅ Product Image with shimmer + error handling
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: AppNetworkImage(
-              imageUrl: widget.item.productImage,
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
-            ),
+          AppNetworkImage(
+            imageUrl: widget.item.productImage,
+            width: 80,
+            height: 80,
           ),
           const SizedBox(width: 12),
-
           // ✅ Product Info
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.item.productName,
-                  style: context.h6?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.kTextColor,
-                  ),
+                AppText(
+                  text: widget.item.productName,
+                  fontWeight: FontWeight.bold,
+                  color: context.kTextColor,
+                  fontSize: 16,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

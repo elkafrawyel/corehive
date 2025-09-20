@@ -1,3 +1,4 @@
+import 'package:corehive_store/app/presentation/screens/search/controller/search_controller.dart';
 import 'package:get/get.dart';
 import 'package:corehive_store/app/presentation/screens/main/controllers/nav_controller.dart';
 import 'package:corehive_store/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
@@ -26,6 +27,9 @@ class MainBinding extends Bindings {
       () => ShippingAddressController(
         repository: Get.find<ShippingAddressRepository>(),
       ),
+    );
+    Get.lazyPut(
+      () => SearchController(productRepository: Get.find<ProductRepository>()),
     );
     Get.lazyPut(() => ProfileController());
     Get.lazyPut(

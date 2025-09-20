@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../../data/models/shipping_address_model.dart';
+import '../../../../../widgets/app_card.dart';
 
 class ShippingAddressView extends StatelessWidget {
   final ShippingAddress address;
@@ -13,7 +14,8 @@ class ShippingAddressView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return AppCard(
+      elevation: 4,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
         leading: Icon(

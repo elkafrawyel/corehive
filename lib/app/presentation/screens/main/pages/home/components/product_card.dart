@@ -29,7 +29,7 @@ class ProductCard extends StatelessWidget {
     final iconColor = context.kPrimaryColor;
 
     return SizedBox(
-      width: isInHorizontalList ? 140 : double.infinity,
+      width: isInHorizontalList ? 150 : double.infinity,
       child: AppCard(
         backgroundColor: Colors.white,
         borderColor: Colors.transparent,
@@ -42,8 +42,8 @@ class ProductCard extends StatelessWidget {
             Stack(
               children: [
                 AppNetworkImage(
-                  height: 120,
-                  width: isInHorizontalList ? 120 : double.infinity,
+                  height: isInHorizontalList ? 130 : 0200,
+                  width: isInHorizontalList ? 130 : double.infinity,
                   imageUrl: product.imageUrl,
                   fit: BoxFit.cover,
                   radius: 12,

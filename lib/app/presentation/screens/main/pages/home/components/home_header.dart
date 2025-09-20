@@ -1,4 +1,5 @@
 import 'package:corehive_store/app/presentation/screens/main/pages/home/controller/home_controller.dart';
+import 'package:corehive_store/app/presentation/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/config/extension/space_extension.dart';
@@ -7,6 +8,7 @@ import 'package:corehive_store/app/presentation/widgets/app_card.dart';
 import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 import '../../../../shipping_address/controller/shipping_address_controller.dart';
 
@@ -108,88 +110,68 @@ class HomeHeader extends StatelessWidget {
               16.ph,
 
               // Modern Search Bar
-              Container(
-                decoration: BoxDecoration(
-                  color: context.kTextFieldColor,
-                  borderRadius: BorderRadius.circular(32),
-                  // more rounded for pill shape
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () => PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: SearchScreen(),
+                  withNavBar: true,
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 6,
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      color: context.kHintTextColor.withValues(alpha: 0.7),
-                      size: 20,
+                child: Hero(
+                  tag: 'search-bar-hero',
+
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: context.kTextFieldColor,
+                      borderRadius: BorderRadius.circular(32),
+                      // more rounded for pill shape
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
-                    10.pw,
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search products, brands...',
-                          hintStyle: TextStyle(
-                            color: context.kHintTextColor.withValues(
-                              alpha: 0.6,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 6,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.search,
+                          color: context.kHintTextColor.withValues(alpha: 0.7),
+                          size: 20,
+                        ),
+                        10.pw,
+                        Expanded(
+                          child: IgnorePointer(
+                            child: TextField(
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                hintText: 'Search products, brands...',
+                                hintStyle: TextStyle(
+                                  color: context.kHintTextColor.withValues(
+                                    alpha: 0.6,
+                                  ),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                border: InputBorder.none,
+                                isDense: true,
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                              style: TextStyle(
+                                color: context.kTextColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
                           ),
-                          border: InputBorder.none,
-                          isDense: true,
-                          contentPadding: EdgeInsets.zero,
                         ),
-                        style: TextStyle(
-                          color: context.kTextColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      ],
                     ),
-                    12.pw,
-                    Container(
-                      decoration: BoxDecoration(
-                        color: context.kPrimaryColor,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.kPrimaryColor.withValues(alpha: 0.3),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.qr_code_scanner,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          6.pw,
-                          AppText(
-                            text: 'Scan',
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
 

@@ -1,8 +1,6 @@
-import '../../domain/repositories/product_repository_base.dart';
 import '../models/product_model.dart';
 
-class ProductRepository extends ProductRepositoryBase {
-  @override
+class ProductRepository {
   List<Product> getAllProducts() {
     return [
       Product(
@@ -268,37 +266,31 @@ class ProductRepository extends ProductRepositoryBase {
     ];
   }
 
-  @override
   List<Product> getFeaturedProducts() {
     final products = getAllProducts();
     return products.take(6).toList();
   }
 
-  @override
   List<Product> getBestSellers() {
     final products = getAllProducts();
     return products.skip(6).take(6).toList();
   }
 
-  @override
   List<Product> getFlashDeals() {
     final products = getAllProducts();
     return products.skip(12).take(4).toList();
   }
 
-  @override
   List<Product> getBrands() {
     final products = getAllProducts();
     return products.take(4).toList();
   }
 
-  @override
   List<Product> getRecentlyViewed() {
     final products = getAllProducts();
     return [products[0], products[2]];
   }
 
-  @override
   List<String> getCategories() {
     return [
       'Electronics',
@@ -312,7 +304,6 @@ class ProductRepository extends ProductRepositoryBase {
     ];
   }
 
-  @override
   Map<String, List<String>> getSubCategoriesMap() {
     return {
       'Electronics': [

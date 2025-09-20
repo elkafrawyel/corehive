@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import '../../../../../../data/models/cart_model.dart';
 import '../../../../../../data/models/shipping_address_model.dart';
-import '../../../../../../data/repositories/shipping_address_repository.dart';
 import '../../../../../../data/repositories/cart_repository.dart';
 
 class CartController extends GetxController {
@@ -25,8 +24,13 @@ class CartController extends GetxController {
   }
 
   void addItem(CartModel item) {
-    cartRepository.addCartItem(item);
-    items.value = cartRepository.getAllCartItems();
+    final existing = items.firstWhereOrNull((e) => e.id == item.id);
+    if (existing != null) {
+      increase(existing);
+    } else {
+      cartRepository.addCartItem(item);
+      items.value = cartRepository.getAllCartItems();
+    }
   }
 
   void removeItem(CartModel item) {
