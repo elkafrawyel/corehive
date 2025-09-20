@@ -1,11 +1,11 @@
+import 'package:corehive_store/app/data/repositories/auth_repository.dart';
 import 'package:get/get.dart';
 import 'package:corehive_store/app/config/app_loader.dart';
 import '../../../../config/information_viewer.dart';
 import '../../../../data/api_requests/register_request.dart';
-import '../../../../domain/repositories/auth_repository.dart';
 
 class AuthController extends GetxController {
-  final AuthRepository repository;
+  final AuthRepositoryImpl repository;
 
   AuthController({required this.repository});
 
@@ -46,14 +46,20 @@ class AuthController extends GetxController {
   }
 
   void signInWithGoogle() {
-    InformationViewer.showSuccessToast(msg: 'Google Sign-In not implemented yet.');
+    InformationViewer.showSuccessToast(
+      msg: 'Google Sign-In not implemented yet.',
+    );
   }
 
   void signInWithApple() {
-    InformationViewer.showSuccessToast(msg: 'Apple Sign-In not implemented yet.');
+    InformationViewer.showSuccessToast(
+      msg: 'Apple Sign-In not implemented yet.',
+    );
   }
 
   void signInWithFacebook() {
-    InformationViewer.showSuccessToast(msg: 'Facebook Sign-In not implemented yet.');
+    InformationViewer.showSuccessToast(
+      msg: 'Facebook Sign-In not implemented yet.',
+    );
   }
 }

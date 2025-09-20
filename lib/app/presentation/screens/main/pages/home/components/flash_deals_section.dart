@@ -1,3 +1,4 @@
+import 'package:corehive_store/app/config/information_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/config/extension/space_extension.dart';
@@ -5,6 +6,9 @@ import 'package:corehive_store/app/presentation/widgets/app_text.dart';
 import 'package:corehive_store/app/presentation/widgets/app_card.dart';
 import 'package:corehive_store/app/presentation/widgets/app_button.dart';
 import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
+import 'package:get/get.dart';
+import 'package:corehive_store/app/data/models/cart_model.dart';
+import 'package:corehive_store/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
 
 class FlashDealData {
   final String id;
@@ -98,7 +102,8 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
               8.pw,
               Expanded(
                 child: AppText(
-                  text: 'Ends in: ${_formatTimeRemaining(deals[_currentIndex].endTime)}',
+                  text:
+                      'Ends in: ${_formatTimeRemaining(deals[_currentIndex].endTime)}',
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: context.kErrorColor,
@@ -112,9 +117,9 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
               ),
             ],
           ),
-          
+
           12.ph,
-          
+
           // Deals carousel
           SizedBox(
             height: 320,
@@ -126,12 +131,13 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
                   _currentIndex = index;
                 });
               },
-              itemBuilder: (context, index) => _buildDealCard(context, deals[index]),
+              itemBuilder: (context, index) =>
+                  _buildDealCard(context, deals[index]),
             ),
           ),
-          
+
           12.ph,
-          
+
           // Page indicators
           Center(
             child: Row(
@@ -143,8 +149,8 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
                   width: _currentIndex == index ? 20 : 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: _currentIndex == index 
-                        ? context.kPrimaryColor 
+                    color: _currentIndex == index
+                        ? context.kPrimaryColor
                         : context.kHintTextColor.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(4),
                   ),
@@ -183,13 +189,16 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
                   ),
                 ),
               ),
-              
+
               // Discount badge
               Positioned(
                 top: 8,
                 left: 8,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: context.kErrorColor,
                     borderRadius: BorderRadius.circular(8),
@@ -202,13 +211,16 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
                   ),
                 ),
               ),
-              
+
               // Stock indicator
               Positioned(
                 top: 8,
                 right: 8,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(8),
@@ -223,9 +235,9 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
               ),
             ],
           ),
-          
+
           12.ph,
-          
+
           // Product details
           AppText(
             text: deal.title,
@@ -234,9 +246,9 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
             color: context.kTextColor,
             maxLines: 2,
           ),
-          
+
           8.ph,
-          
+
           // Price section
           Row(
             children: [
@@ -255,9 +267,9 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
               ),
             ],
           ),
-          
+
           12.ph,
-          
+
           // Add to cart button
           SizedBox(
             width: double.infinity,
@@ -268,7 +280,30 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
               textColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 12),
               onPressed: () {
-                // Add to cart logic
+                final cartController = Get.find<CartController>();
+                final price =
+                    double.tryParse(
+                      deal.discountedPrice.replaceAll(RegExp(r'[^0-9.]'), ''),
+                    ) ??
+                    0.0;
+                final existing = cartController.items.firstWhereOrNull(
+                  (item) => item.productName == deal.title,
+                );
+                if (existing != null) {
+                  existing.quantity.value++;
+                } else {
+                  cartController.addItem(
+                    CartModel(
+                      id: 'CART-FLASH-${deal.id}',
+                      productName: deal.title,
+                      productImage: deal.imageUrl,
+                      quantity: 1,
+                      price: price,
+                      shippingCost: 15.0,
+                    ),
+                  );
+                }
+                InformationViewer.showSuccessToast(msg: 'Added to cart!');
               },
             ),
           ),
@@ -280,15 +315,15 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
   String _formatTimeRemaining(DateTime endTime) {
     final now = DateTime.now();
     final difference = endTime.difference(now);
-    
+
     if (difference.isNegative) {
       return 'Expired';
     }
-    
+
     final hours = difference.inHours;
     final minutes = difference.inMinutes % 60;
     final seconds = difference.inSeconds % 60;
-    
+
     return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 }

@@ -12,12 +12,14 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (profileController.isLoggedIn.value) {
-        return const ProfileLoggedInPage();
-      } else {
-        return const ProfileGuestPage();
-      }
-    });
+    return GetBuilder<ProfileController>(
+      builder: (profileController) {
+        if (profileController.isLoggedIn.value) {
+          return const ProfileLoggedInPage();
+        } else {
+          return const ProfileGuestPage();
+        }
+      },
+    );
   }
 }

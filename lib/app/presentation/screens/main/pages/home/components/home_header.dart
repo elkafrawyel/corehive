@@ -8,6 +8,8 @@ import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+import '../../../../shipping_address/controller/shipping_address_controller.dart';
+
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
 
@@ -194,8 +196,8 @@ class HomeHeader extends StatelessWidget {
               12.ph,
 
               // User's delivery address
-              Obx(
-                () => Padding(
+              GetBuilder<ShippingAddressController>(
+                builder: (controller) => Padding(
                   padding: const EdgeInsets.only(
                     top: 8.0,
                     left: 8.0,

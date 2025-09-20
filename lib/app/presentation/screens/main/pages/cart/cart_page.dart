@@ -1,15 +1,13 @@
+import 'package:corehive_store/app/presentation/screens/shipping_address/controller/shipping_address_controller.dart';
 import 'package:corehive_store/app/presentation/widgets/app_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:corehive_store/app/config/information_viewer.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
 import 'package:corehive_store/app/presentation/widgets/app_button.dart';
 
 import '../../../../widgets/app_text.dart';
-import '../../../shipping_address/controller/shipping_address_controller.dart';
-import '../../../shipping_address/shipping_address_screen.dart';
 import 'components/cart_card.dart';
 
 class CartPage extends StatelessWidget {
@@ -47,74 +45,75 @@ class CartPage extends StatelessWidget {
           children: [
             // Shipping Address Section
             Obx(() {
-              final address = cartController.selectedAddress.value;
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: AppCard(
-                  elevation: 2.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: context.kPrimaryColor,
-                          size: 28,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+              if (cartController.items.isEmpty) {
+                return const SizedBox.shrink();
+              }
+              final address =
+                  Get.find<ShippingAddressController>().primaryAddress.value;
+              return address == null
+                  ? SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      child: AppCard(
+                        elevation: 2.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
                             children: [
-                              Text(
-                                address.name,
-                                style: context.h6?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Icon(
+                                Icons.location_on,
+                                color: context.kPrimaryColor,
                               ),
-                              Text(address.address, style: context.body2),
-                              Text(
-                                address.phone,
-                                style: context.body2?.copyWith(
-                                  color: Colors.grey,
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  address.address,
+                                  style: context.body1,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        TextButton(
-                          onPressed: () async {
-                            await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const ShippingAddressScreen(),
-                              ),
-                            );
-                            // After returning, update selected address from controller
-                            final controller = Get.find<CartController>();
-                            final shippingController =
-                                Get.find<ShippingAddressController>();
-                            controller.selectedAddress.value =
-                                shippingController.primaryAddress.value ??
-                                controller.selectedAddress.value;
-                          },
-                          child: const Text(
-                            'Edit',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    );
+            }),
+            // Cart Items List
+            Expanded(
+              child: Obx(() {
+                if (cartController.items.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.shopping_cart_outlined,
+                          size: 64,
+                          color: context.kPrimaryColor.withOpacity(0.3),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Your cart is empty',
+                          style: context.h5?.copyWith(
+                            color: context.kHintTextColor,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Add items to your cart to see them here.',
+                          style: context.body2?.copyWith(
+                            color: context.kHintTextColor,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ),
-              );
-            }),
-            // Cart Items List
-            Expanded(
-              child: Obx(
-                () => ListView.separated(
+                  );
+                }
+                return ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: cartController.items.length,
                   separatorBuilder: (_, __) => const SizedBox(height: 16),
@@ -128,28 +127,24 @@ class CartPage extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         child: TweenAnimationBuilder<double>(
                           tween: Tween(begin: 0, end: 1),
-                          duration: Duration(milliseconds: 400 + (index * 100)),
+                          duration: const Duration(milliseconds: 400),
                           builder: (context, value, child) {
-                            return Opacity(
-                              opacity: value,
-                              child: Transform.translate(
-                                offset: Offset(0, (1 - value) * 50),
-                                child: child,
-                              ),
-                            );
+                            return Opacity(opacity: value, child: child);
                           },
                           child: CartCard(item: item),
                         ),
                       ),
                     );
                   },
-                ),
-              ),
+                );
+              }),
             ),
             // Checkout Section
             Obx(() {
+              if (cartController.items.isEmpty) {
+                return const SizedBox.shrink();
+              }
               final address = cartController.selectedAddress.value;
-              // Example: shipping cost based on address (could be more complex)
               double shippingCost = address.isPrimary ? 15.0 : 25.0;
               return Container(
                 margin: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
@@ -175,11 +170,13 @@ class CartPage extends StatelessWidget {
                           "Total",
                           style: TextStyle(color: Colors.grey, fontSize: 15),
                         ),
-                        Text(
-                          "\$${cartController.totalPrice.toStringAsFixed(2)}",
-                          style: context.h4?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: context.kPrimaryColor,
+                        Obx(
+                          () => Text(
+                            "\$${cartController.totalPrice.toStringAsFixed(2)}",
+                            style: context.h4?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: context.kPrimaryColor,
+                            ),
                           ),
                         ),
                       ],
@@ -194,27 +191,19 @@ class CartPage extends StatelessWidget {
                         ),
                         Text(
                           "\$${shippingCost.toStringAsFixed(2)}",
-                          style: TextStyle(
+                          style: context.h4?.copyWith(
+                            fontWeight: FontWeight.bold,
                             color: context.kPrimaryColor,
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Delivery to: ${address.name}, ${address.address}",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                    ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 16),
                     AppButton(
-                      onPressed: () {
-                        InformationViewer.showSnackBar(
-                          msg: 'Proceeding to payment...',
-                        );
-                      },
                       text: "Checkout",
-                      fullWidth: true,
+                      onPressed: () {
+                        // Handle checkout
+                      },
                     ),
                   ],
                 ),

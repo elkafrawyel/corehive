@@ -1,14 +1,14 @@
+import 'package:corehive_store/app/data/models/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
-import 'package:corehive_store/app/domain/entities/cart_model.dart';
 
 import '../../../../../widgets/app_card.dart';
 import '../../../../../widgets/app_network_image.dart';
 import '../controller/cart_controller.dart';
 
 class CartCard extends StatefulWidget {
-  final CartItem item;
+  final CartModel item;
 
   const CartCard({required this.item, super.key});
 
@@ -31,7 +31,7 @@ class _CartCardState extends State<CartCard>
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: AppNetworkImage(
-              imageUrl: widget.item.imageUrl,
+              imageUrl: widget.item.productImage,
               width: 80,
               height: 80,
               fit: BoxFit.cover,
@@ -45,7 +45,7 @@ class _CartCardState extends State<CartCard>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.item.title,
+                  widget.item.productName,
                   style: context.h6?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: context.kTextColor,
@@ -66,26 +66,61 @@ class _CartCardState extends State<CartCard>
           ),
 
           // ✅ Quantity Controls
-          Obx(
-            () => Row(
+          GetBuilder<CartController>(
+            builder: (cartController) => Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _circleButton(
-                  context,
-                  icon: Icons.remove,
-                  onTap: () => CartController.to.decrease(widget.item),
-                ),
+                Obx(() {
+                  return widget.item.quantity.value == 1
+                      ? _circleButton(
+                          context,
+                          icon: Icons.delete,
+                          onTap: () async {
+                            final shouldDelete = await showDialog<bool>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Remove Item'),
+                                content: const Text(
+                                  'Are you sure you want to remove this item from your cart?',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                    child: const Text('Delete'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            if (shouldDelete == true) {
+                              cartController.removeItem(widget.item);
+                            }
+                          },
+                        )
+                      : _circleButton(
+                          context,
+                          icon: Icons.remove,
+                          onTap: () => cartController.decrease(widget.item),
+                        );
+                }),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    widget.item.quantity.value.toString(),
-                    style: context.h6?.copyWith(fontWeight: FontWeight.bold),
+                  child: Obx(
+                    () => Text(
+                      widget.item.quantity.value.toString(),
+                      style: context.h6?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
                 _circleButton(
                   context,
                   icon: Icons.add,
-                  onTap: () => CartController.to.increase(widget.item),
+                  onTap: () => cartController.increase(widget.item),
                 ),
               ],
             ),

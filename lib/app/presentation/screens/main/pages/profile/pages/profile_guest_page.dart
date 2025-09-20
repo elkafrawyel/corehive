@@ -68,12 +68,12 @@ class ProfileGuestPage extends StatelessWidget {
                 onTap: () {},
               ),
               // Interactive Tiles
-              Obx(
-                () => ProfileTileToggle(
+              GetBuilder<ThemeController>(
+                builder: (controller) => ProfileTileToggle(
                   icon: Icons.dark_mode,
                   title: "Theme",
-                  value: ThemeController.to.isDarkMode.value,
-                  onChanged: (val) => ThemeController.to.toggleAppTheme(),
+                  value: controller.isDarkMode.value,
+                  onChanged: (val) => controller.toggleAppTheme(),
                 ),
               ),
 

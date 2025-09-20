@@ -33,94 +33,98 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return Scaffold(
       body: SafeArea(
-        child: Obx(() {
-          final homeController = Get.find<HomeController>();
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(child: const HomeHeader()),
-              SliverToBoxAdapter(child: 16.ph),
-              SliverToBoxAdapter(child: const HomeBanner()),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverToBoxAdapter(
-                child: const SectionTitle(title: "Categories"),
-              ),
-              SliverToBoxAdapter(child: HomeCategories()),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverToBoxAdapter(child: QuickActionsSection()),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverToBoxAdapter(child: const FlashDealsSection()),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverToBoxAdapter(
-                child: const SectionTitle(title: "Featured Products"),
-              ),
-              SliverToBoxAdapter(
-                child: HorizontalListView(
-                  products: homeController.featuredProducts,
+        child: GetBuilder<HomeController>(
+          builder: (homeController) {
+            return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: const HomeHeader()),
+                SliverToBoxAdapter(child: 16.ph),
+                SliverToBoxAdapter(child: const HomeBanner()),
+                SliverToBoxAdapter(child: 20.ph),
+                SliverToBoxAdapter(
+                  child: const SectionTitle(title: "Categories"),
                 ),
-              ),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverToBoxAdapter(child: BrandsSection()),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Iconsax.clock_outline,
-                        color: context.kPrimaryColor,
-                        size: 20,
-                      ),
-                      8.pw,
-                      AppText(
-                        text: 'Recently Viewed',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: context.kTextColor,
-                      ),
-                      const Spacer(),
-                      AppText(
-                        text: 'See All',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: context.kHintTextColor,
-                      ),
-                    ],
+                SliverToBoxAdapter(child: HomeCategories()),
+                SliverToBoxAdapter(child: 20.ph),
+                SliverToBoxAdapter(child: QuickActionsSection()),
+                SliverToBoxAdapter(child: 20.ph),
+                SliverToBoxAdapter(child: const FlashDealsSection()),
+                SliverToBoxAdapter(child: 20.ph),
+                SliverToBoxAdapter(
+                  child: const SectionTitle(title: "Featured Products"),
+                ),
+                SliverToBoxAdapter(
+                  child: HorizontalListView(
+                    products: homeController.featuredProducts,
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: HorizontalListView(
-                  products: homeController.recentlyViewed,
-                ),
-              ),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
+                SliverToBoxAdapter(child: 20.ph),
+                SliverToBoxAdapter(child: BrandsSection()),
+                SliverToBoxAdapter(child: 20.ph),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Iconsax.clock_outline,
+                          color: context.kPrimaryColor,
+                          size: 20,
+                        ),
+                        8.pw,
+                        AppText(
+                          text: 'Recently Viewed',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: context.kTextColor,
+                        ),
+                        const Spacer(),
+                        AppText(
+                          text: 'See All',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: context.kHintTextColor,
+                        ),
+                      ],
+                    ),
                   ),
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final product = homeController.products[index];
-                    return ProductCard(product: product);
-                  }, childCount: homeController.products.length),
                 ),
-              ),
-              SliverToBoxAdapter(child: 20.ph),
-              SliverToBoxAdapter(
-                child: const SectionTitle(title: "Best Sellers"),
-              ),
-              SliverToBoxAdapter(
-                child: HorizontalListView(products: homeController.bestSellers),
-              ),
-              SliverToBoxAdapter(child: 20.ph),
-            ],
-          );
-        }),
+                SliverToBoxAdapter(
+                  child: HorizontalListView(
+                    products: homeController.recentlyViewed,
+                  ),
+                ),
+                SliverToBoxAdapter(child: 20.ph),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final product = homeController.products[index];
+                      return ProductCard(product: product);
+                    }, childCount: homeController.products.length),
+                  ),
+                ),
+                SliverToBoxAdapter(child: 20.ph),
+                SliverToBoxAdapter(
+                  child: const SectionTitle(title: "Best Sellers"),
+                ),
+                SliverToBoxAdapter(
+                  child: HorizontalListView(
+                    products: homeController.bestSellers,
+                  ),
+                ),
+                SliverToBoxAdapter(child: 20.ph),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
