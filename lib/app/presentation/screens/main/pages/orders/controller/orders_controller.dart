@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import '../data/order_data.dart';
-import '../data/order_model.dart';
+import '../../../../../../data/models/order_model.dart';
 
 class OrdersController extends GetxController {
   RxString selectedStatus = RxString('');

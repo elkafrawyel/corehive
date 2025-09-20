@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
-
+import '../../../../../../data/models/shipping_address_model.dart';
+import '../../../../../../data/repositories/shipping_address_repository.dart';
 import '../../../../../../domain/entities/cart_model.dart';
-import '../../../../shipping_address/data/shipping_address_data.dart';
-import '../../../../shipping_address/data/shipping_address_model.dart';
 
 class CartController extends GetxController {
   static CartController get to => Get.find<CartController>();
   var items = <CartItem>[].obs;
 
-  Rx<ShippingAddress> selectedAddress =
-      (shippingAddresses.firstWhereOrNull((a) => a.isPrimary) ??
-              shippingAddresses.first)
-          .obs;
+  final ShippingAddressRepository addressRepository =
+      ShippingAddressRepository();
+  Rx<ShippingAddress> selectedAddress = Rx<ShippingAddress>(
+    ShippingAddress(id: '', name: '', address: '', phone: '', isPrimary: false),
+  );
 
   void selectAddress(ShippingAddress address) {
     selectedAddress.value = address;
@@ -31,6 +31,13 @@ class CartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    final primary = addressRepository.getPrimaryAddress();
+    if (primary != null) {
+      selectedAddress.value = primary;
+    } else {
+      final all = addressRepository.getAllAddresses();
+      if (all.isNotEmpty) selectedAddress.value = all.first;
+    }
     // Demo mobile items
     addItem(
       CartItem(

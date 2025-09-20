@@ -1,4 +1,4 @@
-import 'order_model.dart';
+import '../../../../../../data/models/order_model.dart';
 
 final List<OrderModel> ordersData = [
   OrderModel(
