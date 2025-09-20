@@ -4,10 +4,7 @@ import '../app_text.dart';
 class AppEmptyView extends StatelessWidget {
   final String? emptyText;
 
-  const AppEmptyView({
-    super.key,
-    this.emptyText,
-  });
+  const AppEmptyView({super.key, this.emptyText});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +14,6 @@ class AppEmptyView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // TODO: Add a Lottie or illustration for empty state
             if (emptyText != null && emptyText!.isNotEmpty)
               AppText(
                 text: emptyText!,

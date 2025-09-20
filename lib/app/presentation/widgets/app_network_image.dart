@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../config/res.dart';

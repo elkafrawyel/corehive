@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../widgets/app_text.dart';
 
 class FilterChips extends StatelessWidget {
   final String? selectedStatus;

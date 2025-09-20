@@ -12,14 +12,7 @@ import '../app_text.dart';
 import 'auth_form_rules.dart';
 import 'custom_shake_widget.dart';
 
-enum AppFieldType {
-  text,
-  name,
-  email,
-  password,
-  confirmPassword,
-  phone,
-}
+enum AppFieldType { text, name, email, password, confirmPassword, phone }
 
 class AppTextFormField extends StatefulWidget {
   final String? hintText;
@@ -89,8 +82,9 @@ class AppTextFormFieldState extends State<AppTextFormField> {
   final GlobalKey<CustomShakeWidgetState> _shakerKey = GlobalKey();
   final FocusNode _focusNode = FocusNode();
   bool hasError = false;
-  final String _emptyValidationText =
-  StorageClient().isAr() ? 'هذا الحقل مطلوب' : 'This field is Required';
+  final String _emptyValidationText = StorageClient().isAr()
+      ? 'هذا الحقل مطلوب'
+      : 'This field is Required';
 
   List<Widget> _errors = [];
   AppTimeDebuncer debuncer = AppTimeDebuncer.instance;
@@ -98,7 +92,8 @@ class AppTextFormFieldState extends State<AppTextFormField> {
   @override
   void initState() {
     super.initState();
-    _isPasswordField = widget.appFieldType == AppFieldType.password ||
+    _isPasswordField =
+        widget.appFieldType == AppFieldType.password ||
         widget.appFieldType == AppFieldType.confirmPassword;
     _isSecure = _isPasswordField;
 
@@ -145,7 +140,9 @@ class AppTextFormFieldState extends State<AppTextFormField> {
               if (!widget.checkRulesOnTyping) clearApiError();
               debuncer.debounce(
                 const Duration(milliseconds: 800),
-                    () => _validateRules(checkRulesOnTyping: widget.checkRulesOnTyping),
+                () => _validateRules(
+                  checkRulesOnTyping: widget.checkRulesOnTyping,
+                ),
               );
               widget.onChanged?.call(value);
             },
@@ -166,23 +163,23 @@ class AppTextFormFieldState extends State<AppTextFormField> {
               helper: (_apiErrorText?.isEmpty ?? true)
                   ? null
                   : Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(Icons.error, color: context.kErrorColor),
-                    10.pw,
-                    Flexible(
-                      child: AppText(
-                        text: _apiErrorText ?? '',
-                        color: context.kErrorColor,
-                        fontSize: 12,
-                        maxLines: 4,
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.error, color: context.kErrorColor),
+                          10.pw,
+                          Flexible(
+                            child: AppText(
+                              text: _apiErrorText ?? '',
+                              color: context.kErrorColor,
+                              fontSize: 12,
+                              maxLines: 4,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
               helperMaxLines: 4,
               labelText: widget.labelText,
               labelStyle: TextStyle(
@@ -203,38 +200,44 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                     : Constants.fontFamily,
                 fontWeight: FontWeight.w400,
               ),
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 18,
+                vertical: 12,
+              ),
               prefixIcon: widget.prefixIcon != null
                   ? Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    start: 15, end: 8, top: 15, bottom: 15),
-                child: SvgPicture.asset(
-                  widget.prefixIcon!,
-                  fit: BoxFit.fitHeight,
-                  height: 20,
-                  width: 20,
-                  colorFilter: ColorFilter.mode(
-                    context.kHintTextColor,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              )
+                      padding: const EdgeInsetsDirectional.only(
+                        start: 15,
+                        end: 8,
+                        top: 15,
+                        bottom: 15,
+                      ),
+                      child: SvgPicture.asset(
+                        widget.prefixIcon!,
+                        fit: BoxFit.fitHeight,
+                        height: 20,
+                        width: 20,
+                        colorFilter: ColorFilter.mode(
+                          context.kHintTextColor,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    )
                   : null,
               suffixText: widget.suffixText ?? '',
               suffixIcon: widget.suffixIcon != null || _isPasswordField
                   ? GestureDetector(
-                onTap: _isPasswordField ? _toggle : null,
-                child: Icon(
-                  _isPasswordField
-                      ? (_isSecure
-                      ? Icons.visibility_off
-                      : Icons.remove_red_eye)
-                      : widget.suffixIcon,
-                  size: 20,
-                  color: context.kHintTextColor,
-                ),
-              )
+                      onTap: _isPasswordField ? _toggle : null,
+                      child: Icon(
+                        _isPasswordField
+                            ? (_isSecure
+                                  ? Icons.visibility_off
+                                  : Icons.remove_red_eye)
+                            : widget.suffixIcon,
+                        size: 20,
+                        color: context.kHintTextColor,
+                      ),
+                    )
                   : null,
               enabled: widget.enabled,
               errorStyle: TextStyle(
@@ -280,13 +283,13 @@ class AppTextFormFieldState extends State<AppTextFormField> {
             child: _errors.isEmpty
                 ? const SizedBox(key: ValueKey("no_errors"))
                 : Padding(
-              key: const ValueKey("errors"),
-              padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: _errors,
-              ),
-            ),
+                    key: const ValueKey("errors"),
+                    padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: _errors,
+                    ),
+                  ),
           ),
         ],
       ),
@@ -322,7 +325,7 @@ class AppTextFormFieldState extends State<AppTextFormField> {
   Future shake({bool withFocus = true}) async {
     _shakerKey.currentState?.shake();
     if (withFocus) _focusNode.requestFocus();
-    if ((await Vibration.hasVibrator()) ?? false) {
+    if ((await Vibration.hasVibrator())) {
       Vibration.vibrate();
     }
   }
@@ -339,8 +342,9 @@ class AppTextFormFieldState extends State<AppTextFormField> {
     } else if (widget.rules != null) {
       for (final rule in widget.rules!) {
         final passed = rule.condition(input);
-        (passed ? passedRules : errors)
-            .add(singleError(rule.ruleText, isError: !passed));
+        (passed ? passedRules : errors).add(
+          singleError(rule.ruleText, isError: !passed),
+        );
       }
     }
 

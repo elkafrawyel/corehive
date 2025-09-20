@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/config/theme/theme_controller.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../../../widgets/app_network_image.dart';
 import '../../../../../widgets/app_text.dart';
 import '../components/profile_tile.dart';
 import '../components/profile_tile_switch.dart';
 import '../controller/profile_controller.dart';
+import '../../../../shipping_address/shipping_address_screen.dart';
 
 class ProfileLoggedInPage extends StatelessWidget {
   const ProfileLoggedInPage({super.key});
@@ -51,6 +53,19 @@ class ProfileLoggedInPage extends StatelessWidget {
                 color: context.kHintTextColor,
               ),
               const SizedBox(height: 32),
+
+              // --- Shipping Address Tile ---
+              ProfileTile(
+                icon: Icons.location_on,
+                title: "Shipping Address",
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: ShippingAddressScreen(),
+                    withNavBar: true,
+                  );
+                },
+              ),
 
               // --- Profile Tiles ---
               ProfileTile(

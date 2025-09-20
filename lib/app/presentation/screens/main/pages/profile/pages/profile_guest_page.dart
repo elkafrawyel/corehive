@@ -10,7 +10,6 @@ import '../../../../../widgets/app_network_image.dart';
 import '../../../../../widgets/app_text.dart';
 import '../components/profile_tile.dart';
 import '../components/profile_tile_switch.dart';
-import '../controller/profile_controller.dart';
 
 class ProfileGuestPage extends StatelessWidget {
   const ProfileGuestPage({super.key});

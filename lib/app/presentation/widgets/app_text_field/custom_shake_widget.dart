@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 /// Base class with AnimationController
 abstract class AnimationControllerState<T extends StatefulWidget>
-    extends State<T> with SingleTickerProviderStateMixin {
+    extends State<T>
+    with SingleTickerProviderStateMixin {
   late final animationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1000),
@@ -22,8 +23,8 @@ class CustomShakeWidget extends StatefulWidget {
     required this.child,
     this.shakeCount = 3,
     this.shakeOffset = 10,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final double shakeOffset;
@@ -33,7 +34,8 @@ class CustomShakeWidget extends StatefulWidget {
   State<CustomShakeWidget> createState() => CustomShakeWidgetState();
 }
 
-class CustomShakeWidgetState extends AnimationControllerState<CustomShakeWidget> {
+class CustomShakeWidgetState
+    extends AnimationControllerState<CustomShakeWidget> {
   @override
   void initState() {
     super.initState();
@@ -58,8 +60,9 @@ class CustomShakeWidgetState extends AnimationControllerState<CustomShakeWidget>
       animation: animationController,
       child: widget.child,
       builder: (context, child) {
-        final sineValue =
-        sin(widget.shakeCount * 2 * pi * animationController.value);
+        final sineValue = sin(
+          widget.shakeCount * 2 * pi * animationController.value,
+        );
         return Transform.translate(
           offset: Offset(sineValue * widget.shakeOffset, 0),
           child: child,

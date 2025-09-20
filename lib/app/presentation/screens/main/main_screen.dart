@@ -33,7 +33,6 @@ class MainScreen extends StatelessWidget {
       controller: _controller,
       screens: screens,
       backgroundColor: context.kBackgroundColor,
-
       items: [
         PersistentBottomNavBarItem(
           icon: const FaIcon(FontAwesomeIcons.house),

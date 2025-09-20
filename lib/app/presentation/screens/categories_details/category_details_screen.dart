@@ -47,9 +47,7 @@ class CategoryDetailsScreen extends StatelessWidget {
                 size: 18,
                 color: context.kPrimaryColor,
               ),
-              onTap: () {
-                // TODO: Navigate to subcategory page
-              },
+              onTap: () {},
             ),
           );
         },

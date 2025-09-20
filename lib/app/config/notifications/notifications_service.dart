@@ -72,10 +72,12 @@ class NotificationsService {
   }
 
   String? _getImageUrl(RemoteNotification notification) {
-    if (Platform.isIOS && notification.apple != null)
+    if (Platform.isIOS && notification.apple != null) {
       return notification.apple?.imageUrl;
-    if (Platform.isAndroid && notification.android != null)
+    }
+    if (Platform.isAndroid && notification.android != null) {
       return notification.android?.imageUrl;
+    }
     return null;
   }
 
@@ -146,7 +148,7 @@ class NotificationsService {
 
   void _handleBackgroundMessage(RemoteMessage message) {
     AppLogger.log("🔔 Background Notification Tapped.");
-    final payload = jsonEncode(message.data);
+    // final payload = jsonEncode(message.data);
     // Handle navigation or other actions here
   }
 

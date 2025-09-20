@@ -149,7 +149,7 @@ class HomeHeader extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: context.kPrimaryColor.withOpacity(0.3),
+                        color: context.kPrimaryColor.withValues(alpha: 0.3),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),

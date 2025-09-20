@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
-import 'package:corehive_store/app/config/extension/space_extension.dart';
 import 'package:corehive_store/app/presentation/widgets/app_text.dart';
-import 'package:corehive_store/app/presentation/widgets/app_card.dart';
 import 'package:corehive_store/app/presentation/screens/categories_details/category_details_screen.dart';
 import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
@@ -10,7 +8,7 @@ import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 // Removed old CategoryData class, now using _Category for grid
 
 class HomeCategories extends StatefulWidget {
-  HomeCategories({super.key});
+  const HomeCategories({super.key});
 
   @override
   State<HomeCategories> createState() => _HomeCategoriesState();

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'controller/profile_controller.dart';
 import 'pages/profile_guest_page.dart';
-import 'pages/profile_loggedIn_page.dart';
+import 'pages/profile_login_page.dart';
 
 class ProfilePage extends StatelessWidget {
   final ProfileController profileController = Get.find();

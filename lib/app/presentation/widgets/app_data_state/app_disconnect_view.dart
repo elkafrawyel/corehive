@@ -9,10 +9,7 @@ import '../app_text.dart';
 class AppDisconnectView extends StatelessWidget {
   final VoidCallback? retry;
 
-  const AppDisconnectView({
-    super.key,
-    this.retry,
-  });
+  const AppDisconnectView({super.key, this.retry});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +21,6 @@ class AppDisconnectView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // TODO: Add a Lottie animation or illustration here if available
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 28.0),
               child: AppText(

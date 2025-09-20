@@ -25,7 +25,6 @@ class _CartCardState extends State<CartCard>
   Widget build(BuildContext context) {
     super.build(context);
     return AppCard(
-      onTap: () => print("Card tapped"),
       child: Row(
         children: [
           // ✅ Product Image with shimmer + error handling

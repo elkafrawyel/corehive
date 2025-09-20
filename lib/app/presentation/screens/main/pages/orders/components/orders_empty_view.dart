@@ -8,11 +8,11 @@ class OrdersEmptyView extends StatelessWidget {
   final VoidCallback? onButtonPressed;
 
   const OrdersEmptyView({
-    Key? key,
+    super.key,
     this.message = 'You have not placed any orders yet.',
     this.showButton = true,
     this.onButtonPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

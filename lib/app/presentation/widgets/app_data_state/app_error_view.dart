@@ -7,11 +7,7 @@ class AppErrorView extends StatelessWidget {
   final String? error;
   final Function()? retry;
 
-  const AppErrorView({
-    super.key,
-    this.error,
-    this.retry,
-  });
+  const AppErrorView({super.key, this.error, this.retry});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,6 @@ class AppErrorView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // TODO: Add Lottie or illustration for error state
             if (error != null && error!.isNotEmpty)
               AppText(
                 text: error!,
