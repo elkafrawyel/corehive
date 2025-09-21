@@ -1,24 +1,27 @@
 import 'package:corehive_store/app/data/repositories/auth_repository.dart';
+import 'package:corehive_store/app/presentation/screens/main/controllers/main_binding.dart';
+import 'package:corehive_store/app/presentation/screens/main/main_screen.dart';
 import 'package:get/get.dart';
 import 'package:corehive_store/app/config/app_loader.dart';
 import '../../../../config/information_viewer.dart';
 import '../../../../data/api_requests/register_request.dart';
+import 'package:corehive_store/app/data/repositories/user_repository.dart';
 
 class AuthController extends GetxController {
-  final AuthRepositoryImpl repository;
+  final AuthRepository authRepository;
+  final UserRepository userRepository;
 
-  AuthController({required this.repository});
+  AuthController({required this.authRepository, required this.userRepository});
 
-  var isLoading = false.obs;
   Future<void> register({
     required String name,
     required String email,
     required String phone,
     required String password,
   }) async {
-    isLoading.value = true;
+    AppLoader.loading();
 
-    final result = await repository.register(
+    final result = await authRepository.register(
       registerRequest: RegisterRequest(
         name: name,
         email: email,
@@ -26,40 +29,35 @@ class AuthController extends GetxController {
         password: password,
       ),
     );
+    AppLoader.dismiss();
 
-    result.when(
-      success: (data) {
-        InformationViewer.showSuccessToast(
-          msg: 'Account created successfully!',
-        );
-        // Get.offAll(() => const HomeScreen());
-      },
-      failure: (error, data) => InformationViewer.showErrorToast(msg: error),
-      start: () {},
-      loading: () {
-        AppLoader.loading();
-      },
-      empty: (String message) {},
-    );
-
-    isLoading.value = false;
+    if (result.isSuccess) {
+      InformationViewer.showSuccessToast(msg: 'Register is successfully!');
+      if (result.dataResult != null) {
+        await userRepository.saveUser(result.dataResult!.data!);
+        Get.offAll(() => MainScreen(), binding: MainBinding());
+      }
+    } else {
+      InformationViewer.showErrorToast(msg: result.errorResult!);
+    }
   }
 
-  void signInWithGoogle() {
-    InformationViewer.showSuccessToast(
-      msg: 'Google Sign-In not implemented yet.',
-    );
+  Future<void> login({required String email, required String password}) async {
+    AppLoader.loading();
+    final result = await authRepository.login(email: email, password: password);
+    AppLoader.dismiss();
+    if (result.isSuccess) {
+      InformationViewer.showSuccessToast(msg: 'Logged in successfully!');
+      if (result.dataResult != null) {
+        await userRepository.saveUser(result.dataResult!.data!);
+        Get.offAll(() => MainScreen(), binding: MainBinding());
+      }
+    } else {
+      InformationViewer.showErrorToast(msg: result.errorResult!);
+    }
   }
 
-  void signInWithApple() {
-    InformationViewer.showSuccessToast(
-      msg: 'Apple Sign-In not implemented yet.',
-    );
-  }
+  Future<void> signInWithGoogle() async {}
 
-  void signInWithFacebook() {
-    InformationViewer.showSuccessToast(
-      msg: 'Facebook Sign-In not implemented yet.',
-    );
-  }
+  Future<void> signInWithApple() async {}
 }

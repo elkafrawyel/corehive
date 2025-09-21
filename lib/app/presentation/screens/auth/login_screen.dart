@@ -15,7 +15,7 @@ import '../main/main_screen.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final AuthController controller = Get.find();
+  final AuthController authController = Get.find();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -94,7 +94,10 @@ class LoginScreen extends StatelessWidget {
 
                 if (!isValid) return;
 
-                Get.offAll(() => MainScreen(), binding: MainBinding());
+                authController.login(
+                  email: emailController.text,
+                  password: passwordController.text,
+                );
               },
             ),
             const SizedBox(height: 16),
@@ -131,7 +134,7 @@ class LoginScreen extends StatelessWidget {
               ),
               backgroundColor: const Color(0xFFDB4437),
               textColor: Colors.white,
-              onPressed: () => controller.signInWithGoogle(),
+              onPressed: () => authController.signInWithGoogle(),
             ),
             const SizedBox(height: 16),
             AppButton(
@@ -139,19 +142,7 @@ class LoginScreen extends StatelessWidget {
               icon: const Icon(Icons.apple, size: 20, color: Colors.white),
               backgroundColor: Colors.black,
               textColor: Colors.white,
-              onPressed: () => controller.signInWithApple(),
-            ),
-            const SizedBox(height: 16),
-            AppButton(
-              text: "Continue with Facebook",
-              icon: const FaIcon(
-                FontAwesomeIcons.facebook,
-                size: 20,
-                color: Colors.white,
-              ),
-              backgroundColor: const Color(0xFF1877F2),
-              textColor: Colors.white,
-              onPressed: () => controller.signInWithFacebook(),
+              onPressed: () => authController.signInWithApple(),
             ),
           ],
         ),

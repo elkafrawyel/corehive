@@ -1,3 +1,4 @@
+import 'package:corehive_store/app/data/repositories/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:corehive_store/app/presentation/screens/main/controllers/nav_controller.dart';
 import 'package:corehive_store/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
@@ -17,10 +18,13 @@ class MainBinding extends Bindings {
     Get.lazyPut(() => ProductRepository());
     Get.lazyPut(() => ShippingAddressRepository());
     Get.lazyPut(() => CartRepository());
+    Get.lazyPut(() => UserRepository());
     // controllers
     Get.lazyPut(() => NavController());
 
-    Get.lazyPut(() => HomeController(productRepo: Get.find()));
+    Get.lazyPut(
+      () => HomeController(productRepo: Get.find(), userRepository: Get.find()),
+    );
     Get.lazyPut(() => OrdersController());
     Get.lazyPut(
       () => CartController(
@@ -28,7 +32,7 @@ class MainBinding extends Bindings {
         shippingAddressRepository: Get.find(),
       ),
     );
-    Get.lazyPut(() => ProfileController());
+    Get.lazyPut(() => ProfileController(userRepository: Get.find()));
 
     Get.lazyPut(() => ShippingAddressController(repository: Get.find()));
   }

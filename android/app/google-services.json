@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "87936940280",
+    "project_id": "core-hive",
+    "storage_bucket": "core-hive.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87936940280:android:6a00e3de26aaec2d14230d",
+        "android_client_info": {
+          "package_name": "com.corehive.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbqZqlUlzGbj6Sdr2O1TaIZ6VTkdWlgoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87936940280:android:a7c218ce6d9a072214230d",
+        "android_client_info": {
+          "package_name": "com.corehive.store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbqZqlUlzGbj6Sdr2O1TaIZ6VTkdWlgoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

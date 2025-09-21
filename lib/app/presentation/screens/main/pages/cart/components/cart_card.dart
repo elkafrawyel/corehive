@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 
 import '../../../../../widgets/app_card.dart';
+import '../../../../../widgets/app_dialog.dart';
 import '../../../../../widgets/app_network_image.dart';
 import '../../../../../widgets/app_text.dart';
 import '../controller/cart_controller.dart';
@@ -71,26 +72,14 @@ class _CartCardState extends State<CartCard>
                           context,
                           icon: Icons.delete,
                           onTap: () async {
-                            final shouldDelete = await showDialog<bool>(
+                            bool shouldDelete = await scaleAlertDialog(
                               context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Remove Item'),
-                                content: const Text(
-                                  'Are you sure you want to remove this item from your cart?',
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(false),
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    child: const Text('Delete'),
-                                  ),
-                                ],
-                              ),
+                              title: 'Remove Product',
+                              body:
+                                  'Are you sure you want to remove this product from your cart?',
+                              confirmText: 'Delete',
+                              cancelText: 'Cancel',
+                              barrierDismissible: true,
                             );
                             if (shouldDelete == true) {
                               cartController.removeItem(widget.item);

@@ -10,6 +10,7 @@ import 'package:get/instance_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../config/custome_navigation.dart';
 import '../../screens/product/controller/product_details_controller.dart';
+import '../app_dialog.dart';
 
 class WishlistProductCard extends StatelessWidget {
   final Product product;
@@ -80,24 +81,14 @@ class WishlistProductCard extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.favorite, color: Colors.red),
             onPressed: () async {
-              final shouldRemove = await showDialog<bool>(
+              bool shouldRemove = await scaleAlertDialog(
                 context: context,
-                builder: (ctx) => AlertDialog(
-                  title: const Text('Remove from Wishlist'),
-                  content: const Text(
+                title: 'Remove from Wishlist',
+                body:
                     'Are you sure you want to remove this product from your wishlist?',
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(false),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(true),
-                      child: const Text('Remove'),
-                    ),
-                  ],
-                ),
+                confirmText: 'Remove',
+                cancelText: 'Cancel',
+                barrierDismissible: true,
               );
               if (shouldRemove == true) {
                 Get.find<WishlistController>().remove(product);

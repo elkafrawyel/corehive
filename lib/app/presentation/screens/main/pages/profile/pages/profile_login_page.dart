@@ -5,16 +5,20 @@ import 'package:corehive_store/app/config/theme/theme_controller.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../../../widgets/app_network_image.dart';
 import '../../../../../widgets/app_text.dart';
+import '../../../../../widgets/app_webview.dart';
 import '../components/profile_tile.dart';
 import '../components/profile_tile_switch.dart';
 import '../controller/profile_controller.dart';
 import '../../../../shipping_address/shipping_address_screen.dart';
+import '../../../../edit_profile/edit_profile_screen.dart';
 
 class ProfileLoggedInPage extends StatelessWidget {
   const ProfileLoggedInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ProfileController>();
+    final user = controller.userModel.value;
     return Scaffold(
       backgroundColor: context.kBackgroundColor,
       appBar: AppBar(
@@ -34,24 +38,37 @@ class ProfileLoggedInPage extends StatelessWidget {
           children: [
             // --- Profile Header ---
             AppNetworkImage(
-              imageUrl: 'https://i.pravatar.cc/300',
+              imageUrl: user?.image ?? 'https://i.pravatar.cc/300',
               width: 100,
               height: 100,
               isCircular: true,
             ),
             const SizedBox(height: 16),
             AppText(
-              text: 'John Doe',
+              text: user?.name ?? 'Guest',
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: context.kTextColor,
             ),
             AppText(
-              text: 'johndoe@email.com',
+              text: user?.email ?? '',
               fontSize: 16,
               color: context.kHintTextColor,
             ),
             const SizedBox(height: 32),
+
+            // --- Edit Profile Tile ---
+            ProfileTile(
+              icon: Icons.edit,
+              title: "Edit Profile",
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: EditProfileScreen(),
+                  withNavBar: true,
+                );
+              },
+            ),
 
             // --- Shipping Address Tile ---
             ProfileTile(
@@ -85,7 +102,16 @@ class ProfileLoggedInPage extends StatelessWidget {
             ProfileTile(
               icon: Icons.privacy_tip,
               title: "Privacy Policy",
-              onTap: () {},
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: AppWebView(
+                    title: 'Privacy Policy',
+                    url: 'https://www.google.com/',
+                  ),
+                  withNavBar: true,
+                );
+              },
             ),
             ProfileTile(
               icon: Icons.description,
@@ -109,9 +135,7 @@ class ProfileLoggedInPage extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
-              onTap: () {
-                Get.find<ProfileController>().logout();
-              },
+              onTap: controller.logout,
             ),
           ],
         ),

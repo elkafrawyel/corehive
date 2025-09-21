@@ -4,10 +4,12 @@ import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/presentation/screens/auth/controllers/auth_binding.dart';
 import 'package:corehive_store/app/presentation/screens/auth/login_screen.dart';
 import 'package:corehive_store/app/presentation/widgets/app_button.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../../../../config/res.dart';
 import '../../../../../../config/theme/theme_controller.dart';
 import '../../../../../widgets/app_network_image.dart';
 import '../../../../../widgets/app_text.dart';
+import '../../../../../widgets/app_webview.dart';
 import '../components/profile_tile.dart';
 import '../components/profile_tile_switch.dart';
 
@@ -80,7 +82,16 @@ class ProfileGuestPage extends StatelessWidget {
               ProfileTile(
                 icon: Icons.privacy_tip,
                 title: "Privacy Policy",
-                onTap: () {},
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: AppWebView(
+                      title: 'Privacy Policy',
+                      url: 'https://www.google.com/',
+                    ),
+                    withNavBar: true,
+                  );
+                },
               ),
               ProfileTile(
                 icon: Icons.description,

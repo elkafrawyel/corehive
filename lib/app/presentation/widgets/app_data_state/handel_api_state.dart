@@ -22,15 +22,18 @@ class HandleApiState<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return apiResult.when(
-      start: () => const SizedBox(),
-      loading: () => shimmerLoader ?? const AppLoadingView(),
-      empty: (message) => emptyView ?? AppEmptyView(emptyText: message),
-      success: (_) => child,
-      failure: (message, _) => AppErrorView(
-        error: message,
-        retry: retry,
-      ),
-    );
+    if (apiResult.isStart) {
+      return const SizedBox();
+    } else if (apiResult.isLoading) {
+      return shimmerLoader ?? const AppLoadingView();
+    } else if (apiResult.isEmpty) {
+      return emptyView ?? AppEmptyView(emptyText: apiResult.emptyMessage);
+    } else if (apiResult.isSuccess) {
+      return child;
+    } else if (apiResult.isFailure) {
+      return AppErrorView(error: apiResult.errorResult, retry: retry);
+    } else {
+      return const SizedBox(); // fallback (shouldn’t happen ideally)
+    }
   }
 }

@@ -18,22 +18,8 @@ sealed class ApiResult<T> {
   String? get errorResult =>
       this is ApiFailure<T> ? (this as ApiFailure<T>).message : null;
 
-  /// Pattern matching-like helper
-  R when<R>({
-    required R Function() start,
-    required R Function() loading,
-    required R Function(String message) empty,
-    required R Function(T data) success,
-    required R Function(String message, dynamic data) failure,
-  }) {
-    return switch (this) {
-      ApiStart<T>() => start(),
-      ApiLoading<T>() => loading(),
-      ApiEmpty<T>(:final message) => empty(message),
-      ApiSuccess<T>(:final data) => success(data),
-      ApiFailure<T>(:final message, :final data) => failure(message, data),
-    };
-  }
+  String? get emptyMessage =>
+      this is ApiEmpty<T> ? (this as ApiEmpty<T>).message : null;
 }
 
 class ApiStart<T> extends ApiResult<T> {

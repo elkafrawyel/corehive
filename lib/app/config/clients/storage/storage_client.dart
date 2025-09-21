@@ -12,6 +12,25 @@ enum StorageClientKeys {
 }
 
 class StorageClient {
+  Future<void> removeUserModel() async {
+    await _box.remove(userModelKey);
+    AppLogger.log('Removed user model');
+  }
+
+  // ============= UserModel =============
+  static const String userModelKey = 'user_model';
+
+  Future<void> saveUserModel(Map<String, dynamic> userJson) async {
+    await _box.write(userModelKey, userJson);
+    AppLogger.log('Saved user model = $userJson');
+  }
+
+  Map<String, dynamic>? getUserModel() {
+    final data = _box.read(userModelKey);
+    if (data is Map<String, dynamic>) return data;
+    return null;
+  }
+
   static final StorageClient instance = StorageClient._internal();
   factory StorageClient() => instance;
   StorageClient._internal();

@@ -18,46 +18,52 @@ class ProductList extends StatelessWidget {
       init: ch.SearchController(productRepository: Get.find()),
       dispose: (state) => Get.delete<ch.SearchController>(),
       builder: (controller) {
-        return controller.apiResult.when(
-          start: () => const ProductListPromptView(),
-          loading: () => const ProductListShimmerView(),
-          empty: (String message) {
-            return const ProductListEmptyView();
-          },
-          success: (data) {
-            final isLoadingMore = controller.isLoadingMore;
-            return Stack(
-              children: [
-                NotificationListener<ScrollNotification>(
-                  onNotification: (scrollInfo) {
-                    if (scrollInfo.metrics.pixels >=
-                            scrollInfo.metrics.maxScrollExtent - 100 &&
-                        controller.hasMore &&
-                        !isLoadingMore) {
-                      controller.loadMore();
-                    }
-                    return false;
-                  },
-                  child: ProductListView(products: data as List<Product>),
-                ),
-                if (isLoadingMore)
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: LinearProgressIndicator(
-                      minHeight: 4,
-                      backgroundColor: Colors.grey.shade200,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).primaryColor,
-                      ),
+        final result = controller.apiResult;
+
+        if (result.isStart) {
+          return const ProductListPromptView();
+        } else if (result.isLoading) {
+          return const ProductListShimmerView();
+        } else if (result.isEmpty) {
+          return const ProductListEmptyView();
+        } else if (result.isSuccess) {
+          final isLoadingMore = controller.isLoadingMore;
+          final products = result.dataResult as List<Product>;
+
+          return Stack(
+            children: [
+              NotificationListener<ScrollNotification>(
+                onNotification: (scrollInfo) {
+                  if (scrollInfo.metrics.pixels >=
+                          scrollInfo.metrics.maxScrollExtent - 100 &&
+                      controller.hasMore &&
+                      !isLoadingMore) {
+                    controller.loadMore();
+                  }
+                  return false;
+                },
+                child: ProductListView(products: products),
+              ),
+              if (isLoadingMore)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: LinearProgressIndicator(
+                    minHeight: 4,
+                    backgroundColor: Colors.grey.shade200,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor,
                     ),
                   ),
-              ],
-            );
-          },
-          failure: (String error, dynamic data) => SizedBox(),
-        );
+                ),
+            ],
+          );
+        } else if (result.isFailure) {
+          return const SizedBox();
+        } else {
+          return const SizedBox(); // fallback
+        }
       },
     );
   }

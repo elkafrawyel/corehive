@@ -7,7 +7,7 @@ import 'package:corehive_store/app/config/extension/space_extension.dart';
 import 'package:corehive_store/app/presentation/widgets/app_text.dart';
 import 'package:corehive_store/app/presentation/widgets/app_card.dart';
 import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
-import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -16,7 +16,6 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.find<HomeController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,41 +38,46 @@ class HomeHeader extends StatelessWidget {
                 children: [
                   // User greeting and avatar
                   Expanded(
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundColor: context.kPrimaryColor.withValues(
-                            alpha: 0.1,
+                    child: Obx(
+                      () => Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: context.kPrimaryColor.withValues(
+                              alpha: 0.1,
+                            ),
+                            child: AppNetworkImage(
+                              imageUrl:
+                                  HomeController.to.userModel.value?.image ??
+                                  '',
+                              width: 40,
+                              height: 40,
+                            ),
                           ),
-                          child: AppNetworkImage(
-                            imageUrl:
-                                'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
-                            width: 40,
-                            height: 40,
+                          12.pw,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppText(
+                                  text: 'Good Morning!',
+                                  fontSize: 12,
+                                  color: context.kHintTextColor,
+                                ),
+                                2.ph,
+                                AppText(
+                                  text:
+                                      HomeController.to.userModel.value?.name ??
+                                      '',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: context.kTextColor,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        12.pw,
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AppText(
-                                text: 'Good Morning!',
-                                fontSize: 12,
-                                color: context.kHintTextColor,
-                              ),
-                              2.ph,
-                              AppText(
-                                text: 'John Doe',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: context.kTextColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
 
@@ -193,9 +197,9 @@ class HomeHeader extends StatelessWidget {
                     ),
                     10.pw,
                     AppText(
-                      text: homeController.deliveryAddress.value.isEmpty
+                      text: HomeController.to.deliveryAddress.value.isEmpty
                           ? 'Fetching delivery address...'
-                          : 'Delivery to: ${homeController.deliveryAddress.value}',
+                          : 'Delivery to: ${HomeController.to.deliveryAddress.value}',
                       fontSize: 14,
                       color: context.kHintTextColor,
                     ),

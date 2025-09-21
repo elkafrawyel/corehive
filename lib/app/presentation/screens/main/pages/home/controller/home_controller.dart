@@ -1,10 +1,13 @@
+import 'package:corehive_store/app/data/repositories/user_repository.dart';
 import 'package:get/get.dart';
 import '../../../../../../data/models/product_model.dart';
+import '../../../../../../data/models/user_model.dart';
 import '../../../../../../data/repositories/product_repository.dart';
 
 class HomeController extends GetxController {
   final ProductRepository productRepo;
-  HomeController({required this.productRepo});
+  final UserRepository userRepository;
+  HomeController({required this.productRepo, required this.userRepository});
   static HomeController get to => Get.find<HomeController>();
 
   var products = <Product>[].obs;
@@ -16,6 +19,7 @@ class HomeController extends GetxController {
   var categories = <String>[].obs;
   var subCategoriesMap = <String, List<String>>{}.obs;
   var deliveryAddress = ''.obs;
+  Rx<UserModel?> userModel = Rx<UserModel?>(null);
 
   @override
   void onInit() {
@@ -29,6 +33,7 @@ class HomeController extends GetxController {
     categories.assignAll(productRepo.getCategories());
     subCategoriesMap.assignAll(productRepo.getSubCategoriesMap());
     deliveryAddress.value = '123 Main St, City, Country';
+    userModel.value = userRepository.getUser();
   }
 
   void refreshProducts() {

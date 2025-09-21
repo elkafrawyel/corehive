@@ -3,6 +3,10 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    // START: FlutterFire Configuration
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    // END: FlutterFire Configuration
     id("kotlin-android")
     // Flutter plugin must be applied after Android and Kotlin plugins
     id("dev.flutter.flutter-gradle-plugin")
@@ -56,6 +60,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Enable Crashlytics for release builds
+            manifestPlaceholders["firebase_crashlytics_collection_enabled"] = "true"
         }
     }
 }

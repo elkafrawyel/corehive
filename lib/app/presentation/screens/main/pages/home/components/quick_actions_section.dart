@@ -5,6 +5,9 @@ import 'package:corehive_store/app/config/extension/space_extension.dart';
 import 'package:corehive_store/app/presentation/widgets/app_text.dart';
 import 'package:corehive_store/app/presentation/widgets/app_card.dart';
 import 'package:get/instance_manager.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+
+import '../../../../wishlist/wishlist_screen.dart';
 
 class QuickActionData {
   final String title;
@@ -148,7 +151,11 @@ class QuickActionsSection extends StatelessWidget {
         // Open support chat
         break;
       case 2:
-        // Navigate to wishlist
+        PersistentNavBarNavigator.pushNewScreen(
+          context,
+          screen: WishlistScreen(),
+          withNavBar: true,
+        );
         break;
       case 3:
         // Navigate to coupons
