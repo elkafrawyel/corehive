@@ -44,6 +44,7 @@ class ShippingAddressScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             GetBuilder<ShippingAddressController>(
+              init: ShippingAddressController(repository: Get.find()),
               builder: (controller) {
                 return controller.addresses.isEmpty
                     ? Column(

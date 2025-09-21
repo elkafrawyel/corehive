@@ -1,4 +1,5 @@
 import 'package:corehive_store/app/config/extension/space_extension.dart';
+import 'package:corehive_store/app/config/helpers/time_debuncer.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:corehive_store/app/presentation/screens/search/controller/search_controller.dart'
@@ -25,6 +26,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void dispose() {
     _focusNode.dispose();
+    AppTimeDebuncer.instance.cancel();
     super.dispose();
   }
 
@@ -69,7 +71,10 @@ class _SearchBarState extends State<SearchBar> {
                   isDense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
-                onChanged: (value) => ch.SearchController.to.search(value),
+                onChanged: (value) => AppTimeDebuncer.instance.debounce(
+                  Duration(milliseconds: 600),
+                  () => ch.SearchController.to.search(value),
+                ),
                 style: TextStyle(
                   color: context.kTextColor,
                   fontSize: 14,

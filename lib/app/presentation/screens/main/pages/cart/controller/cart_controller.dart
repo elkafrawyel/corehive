@@ -1,3 +1,4 @@
+import 'package:corehive_store/app/data/repositories/shipping_address_repository.dart';
 import 'package:get/get.dart';
 import '../../../../../../data/models/cart_model.dart';
 import '../../../../../../data/models/shipping_address_model.dart';
@@ -6,21 +7,19 @@ import '../../../../../../data/repositories/cart_repository.dart';
 class CartController extends GetxController {
   static CartController get to => Get.find<CartController>();
   final CartRepository cartRepository;
-  CartController({required this.cartRepository});
+  final ShippingAddressRepository shippingAddressRepository;
+  CartController({
+    required this.cartRepository,
+    required this.shippingAddressRepository,
+  });
   var items = <CartModel>[].obs;
-
-  Rx<ShippingAddress> selectedAddress = Rx<ShippingAddress>(
-    ShippingAddress(id: '', name: '', address: '', phone: '', isPrimary: false),
-  );
+  Rx<ShippingAddress?> primaryAddress = Rx<ShippingAddress?>(null);
 
   @override
   void onInit() {
     super.onInit();
     items.value = cartRepository.getAllCartItems();
-  }
-
-  void selectAddress(ShippingAddress address) {
-    selectedAddress.value = address;
+    primaryAddress.value = shippingAddressRepository.getPrimaryAddress();
   }
 
   void addItem(CartModel item) {
@@ -60,4 +59,8 @@ class CartController extends GetxController {
 
   double get totalPrice =>
       items.fold(0, (sum, item) => sum + (item.price * item.quantity.value));
+
+  void reloadShippingAddress() {
+    primaryAddress.value = shippingAddressRepository.getPrimaryAddress();
+  }
 }

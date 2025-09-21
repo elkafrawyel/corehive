@@ -18,11 +18,13 @@ class OrdersPage extends StatefulWidget {
   State<OrdersPage> createState() => _OrdersPageState();
 }
 
-class _OrdersPageState extends State<OrdersPage> {
+class _OrdersPageState extends State<OrdersPage>
+    with AutomaticKeepAliveClientMixin {
   // State handled by OrdersController
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     const String globalCurrency = 'USD';
     return GetBuilder<OrdersController>(
       builder: (controller) {
@@ -186,4 +188,7 @@ class _OrdersPageState extends State<OrdersPage> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

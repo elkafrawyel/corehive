@@ -1,6 +1,47 @@
 import '../models/product_model.dart';
+import '../../config/clients/api/api_result.dart';
 
 class ProductRepository {
+  ApiResult<List<Product>> searchProducts({
+    String? query,
+    Map<String, dynamic>? filters,
+    int page = 1,
+    int pageSize = 10,
+  }) {
+    List<Product> products = getAllProducts();
+    if (query != null && query.isNotEmpty) {
+      products = products
+          .where((p) => p.title.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+    if (filters != null) {
+      // Multi-select category filter
+      if (filters.containsKey('category') &&
+          filters['category'] is List<String> &&
+          (filters['category'] as List<String>).isNotEmpty) {
+        final selectedCategories = filters['category'] as List<String>;
+        products = products
+            .where((p) => selectedCategories.contains(p.category))
+            .toList();
+      }
+      // Rating filter
+      if (filters.containsKey('minRating') && filters['minRating'] != null) {
+        final minRating = filters['minRating'] as double;
+        products = products.where((p) => (p.rating ?? 0) >= minRating).toList();
+      }
+    }
+    // Pagination
+    final start = (page - 1) * pageSize;
+    final end = start + pageSize;
+    final pagedProducts = products.length > start
+        ? products.sublist(start, end > products.length ? products.length : end)
+        : <Product>[];
+    if (pagedProducts.isEmpty) {
+      return ApiEmpty<List<Product>>("No products found");
+    }
+    return ApiSuccess<List<Product>>(pagedProducts);
+  }
+
   List<Product> getAllProducts() {
     return [
       // Electronics

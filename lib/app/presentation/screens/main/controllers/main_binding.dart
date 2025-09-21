@@ -18,12 +18,18 @@ class MainBinding extends Bindings {
     Get.lazyPut(() => ShippingAddressRepository());
     Get.lazyPut(() => CartRepository());
     // controllers
-    Get.lazyPut(() => HomeController(productRepo: Get.find()));
-    Get.lazyPut(() => ShippingAddressController(repository: Get.find()));
-
-    Get.lazyPut(() => ProfileController());
-    Get.lazyPut(() => CartController(cartRepository: Get.find()));
     Get.lazyPut(() => NavController());
+
+    Get.lazyPut(() => HomeController(productRepo: Get.find()));
     Get.lazyPut(() => OrdersController());
+    Get.lazyPut(
+      () => CartController(
+        cartRepository: Get.find(),
+        shippingAddressRepository: Get.find(),
+      ),
+    );
+    Get.lazyPut(() => ProfileController());
+
+    Get.lazyPut(() => ShippingAddressController(repository: Get.find()));
   }
 }

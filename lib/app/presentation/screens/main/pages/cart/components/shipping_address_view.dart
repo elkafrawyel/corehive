@@ -1,33 +1,40 @@
+import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../data/models/shipping_address_model.dart';
 import '../../../../../widgets/app_card.dart';
+import '../../../../../widgets/app_text.dart';
 
 class ShippingAddressView extends StatelessWidget {
   final ShippingAddress address;
-  final VoidCallback onEdit;
+  final VoidCallback onChange;
 
   const ShippingAddressView({
     required this.address,
-    required this.onEdit,
+    required this.onChange,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppCard(
+      borderWidth: 1,
+      borderColor: context.kPrimaryColor,
       elevation: 4,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
-        leading: Icon(
-          address.isPrimary ? Icons.home : Icons.location_on,
-          color: address.isPrimary ? Colors.green : Colors.grey,
-        ),
-        title: Text(address.name),
+        leading: Icon(Icons.star, color: context.kPrimaryColor),
+        title: AppText(text: address.name),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text(address.address), Text(address.phone)],
+          children: [
+            AppText(text: address.address),
+            AppText(text: address.phone),
+          ],
         ),
-        trailing: TextButton(onPressed: onEdit, child: const Text('Edit')),
+        trailing: TextButton(
+          onPressed: onChange,
+          child: const AppText(text: 'Change'),
+        ),
       ),
     );
   }

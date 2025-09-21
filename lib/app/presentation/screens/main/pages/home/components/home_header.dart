@@ -118,7 +118,6 @@ class HomeHeader extends StatelessWidget {
                 ),
                 child: Hero(
                   tag: 'search-bar-hero',
-
                   child: Container(
                     decoration: BoxDecoration(
                       color: context.kTextFieldColor,
@@ -178,30 +177,24 @@ class HomeHeader extends StatelessWidget {
               12.ph,
 
               // User's delivery address
-              GetBuilder<ShippingAddressController>(
-                builder: (controller) => Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8.0,
-                    left: 8.0,
-                    right: 8.0,
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        FontAwesome.truck_fast_solid,
-                        color: context.kPrimaryColor,
-                        size: 16,
-                      ),
-                      10.pw,
-                      AppText(
-                        text: homeController.deliveryAddress.value.isEmpty
-                            ? 'Fetching delivery address...'
-                            : 'Delivery to: ${homeController.deliveryAddress.value}',
-                        fontSize: 14,
-                        color: context.kHintTextColor,
-                      ),
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      FontAwesome.truck_fast_solid,
+                      color: context.kPrimaryColor,
+                      size: 16,
+                    ),
+                    10.pw,
+                    AppText(
+                      text: homeController.deliveryAddress.value.isEmpty
+                          ? 'Fetching delivery address...'
+                          : 'Delivery to: ${homeController.deliveryAddress.value}',
+                      fontSize: 14,
+                      color: context.kHintTextColor,
+                    ),
+                  ],
                 ),
               ),
             ],

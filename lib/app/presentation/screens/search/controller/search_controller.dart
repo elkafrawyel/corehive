@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:corehive_store/app/data/repositories/product_repository.dart';
 import 'package:corehive_store/app/data/models/product_model.dart';
+import 'package:corehive_store/app/config/clients/api/api_result.dart';
 
 class SearchController extends GetxController {
+  bool isLoadingMore = false;
   static SearchController get to => Get.find();
   void fetchResults() => _fetchResults();
   List<String> get categories => productRepository.getCategories();
@@ -45,21 +47,24 @@ class SearchController extends GetxController {
 
   var query = ''.obs;
   var filters = <String, dynamic>{}.obs;
-  var results = <Product>[];
-  var isLoading = false.obs;
+  ApiResult apiResult = ApiStart<List<Product>>();
+  int page = 1;
+  final int pageSize = 10;
+  bool hasMore = true;
 
   void search(String value) {
-    query.value = value;
+    if (value.isEmpty && filters.isEmpty) {
+      apiResult = ApiStart();
+      update();
+    } else {
+      query.value = value;
+    }
   }
 
   @override
   void onInit() {
     super.onInit();
-    debounce(
-      query,
-      (_) => _fetchResults(),
-      time: const Duration(milliseconds: 400),
-    );
+    ever(query, (_) => _fetchResults());
   }
 
   void setFilter(String key, dynamic value) {
@@ -83,38 +88,58 @@ class SearchController extends GetxController {
     _fetchResults();
   }
 
-  void _fetchResults() {
-    isLoading.value = true;
-    update();
+  void _fetchResults({bool reset = true}) {
+    if (reset) {
+      page = 1;
+      hasMore = true;
+      apiResult = ApiLoading<List<Product>>();
+      update();
+    }
     Future.delayed(const Duration(seconds: 2), () {
-      results = _searchProducts(query.value, filters);
-      isLoading.value = false;
+      final result = productRepository.searchProducts(
+        query: query.value,
+        filters: filters,
+        page: page,
+        pageSize: pageSize,
+      );
+      if (result is ApiSuccess<List<Product>>) {
+        final products = result.data;
+        hasMore = products.length == pageSize;
+        apiResult = result;
+      } else {
+        hasMore = false;
+        apiResult = result;
+      }
       update();
     });
   }
 
-  List<Product> _searchProducts(String query, Map<String, dynamic> filters) {
-    List<Product> products = productRepository.getAllProducts();
-    if (query.isNotEmpty) {
-      products = products
-          .where((p) => p.title.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    }
-    // Multi-select category filter
-    if (filters.containsKey('category') &&
-        filters['category'] is List<String> &&
-        (filters['category'] as List<String>).isNotEmpty) {
-      final selectedCategories = filters['category'] as List<String>;
-      products = products.where((p) {
-        return selectedCategories.contains(p.category);
-      }).toList();
-    }
-    // Rating filter
-    if (filters.containsKey('minRating') && filters['minRating'] != null) {
-      final minRating = filters['minRating'] as double;
-      products = products.where((p) => (p.rating ?? 0) >= minRating).toList();
-    }
-    // Add more filter logic as needed
-    return products;
+  void loadMore() {
+    if (!hasMore || apiResult is ApiLoading<List<Product>>) return;
+    page++;
+    isLoadingMore = true;
+    update();
+    Future.delayed(const Duration(seconds: 2), () {
+      final result = productRepository.searchProducts(
+        query: query.value,
+        filters: filters,
+        page: page,
+        pageSize: pageSize,
+      );
+      if (result is ApiSuccess<List<Product>>) {
+        final products = result.data;
+        hasMore = products.length == pageSize;
+        // Merge with previous results
+        final prev = apiResult is ApiSuccess<List<Product>>
+            ? (apiResult as ApiSuccess<List<Product>>).data
+            : <Product>[];
+        apiResult = ApiSuccess<List<Product>>([...prev, ...products]);
+      } else {
+        hasMore = false;
+        apiResult = result;
+      }
+      isLoadingMore = false;
+      update();
+    });
   }
 }

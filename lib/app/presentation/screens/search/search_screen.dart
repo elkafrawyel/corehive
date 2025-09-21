@@ -16,15 +16,14 @@ class SearchScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
-            onPressed: () => _showFilterSheet(context),
+            onPressed: () => showAppModalBottomSheet(
+              context: context,
+              child: FilterBottomSheet(),
+            ),
           ),
         ],
       ),
       body: ProductList(),
     );
-  }
-
-  void _showFilterSheet(BuildContext context) {
-    showAppModalBottomSheet(context: context, child: FilterBottomSheet());
   }
 }

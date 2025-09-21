@@ -4,7 +4,7 @@ import '../../../../data/models/shipping_address_model.dart';
 
 class ShippingAddressController extends GetxController {
   final ShippingAddressRepository repository;
-  RxList<ShippingAddress> addresses = <ShippingAddress>[].obs;
+  List<ShippingAddress> addresses = <ShippingAddress>[];
   Rx<ShippingAddress?> primaryAddress = Rx<ShippingAddress?>(null);
 
   ShippingAddressController({required this.repository});
@@ -12,32 +12,33 @@ class ShippingAddressController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    addresses.value = repository.getAllAddresses();
+    addresses = repository.getAllAddresses();
+    update();
     primaryAddress.value = repository.getPrimaryAddress();
   }
 
   void selectPrimaryAddress(ShippingAddress address) {
     repository.selectPrimaryAddress(address);
-    addresses.value = repository.getAllAddresses();
+    addresses = repository.getAllAddresses();
     primaryAddress.value = repository.getPrimaryAddress();
-    addresses.refresh();
+    update();
   }
 
   void addAddress(ShippingAddress address) {
     repository.addAddress(address);
-    addresses.value = repository.getAllAddresses();
-    addresses.refresh();
+    addresses = repository.getAllAddresses();
+    update();
   }
 
   void deleteAddress(ShippingAddress address) {
     repository.deleteAddress(address);
-    addresses.value = repository.getAllAddresses();
-    addresses.refresh();
+    addresses = repository.getAllAddresses();
+    update();
   }
 
   void editAddress(ShippingAddress address, ShippingAddress updated) {
     repository.editAddress(address, updated);
-    addresses.value = repository.getAllAddresses();
-    addresses.refresh();
+    addresses = repository.getAllAddresses();
+    update();
   }
 }

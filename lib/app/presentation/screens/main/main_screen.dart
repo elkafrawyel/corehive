@@ -21,19 +21,15 @@ class MainScreen extends StatelessWidget {
     ProfilePage(),
   ];
 
-  final PersistentTabController _controller = PersistentTabController(
-    initialIndex: 0,
-  );
-
   final NavController navController = Get.find<NavController>();
+  final cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
-    final cartController = Get.find<CartController>();
     return Obx(
       () => PersistentTabView(
         context,
-        controller: _controller,
+        controller: navController.tabController,
         screens: screens,
         backgroundColor: context.kBackgroundColor,
         items: [

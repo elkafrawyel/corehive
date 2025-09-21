@@ -1,14 +1,14 @@
-import 'package:corehive_store/app/presentation/screens/shipping_address/controller/shipping_address_controller.dart';
+import 'package:corehive_store/app/presentation/screens/shipping_address/shipping_address_screen.dart';
 import 'package:corehive_store/app/presentation/widgets/app_card.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/presentation/screens/main/pages/cart/controller/cart_controller.dart';
 import 'package:corehive_store/app/presentation/widgets/app_button.dart';
-
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../../widgets/app_text.dart';
 import 'components/cart_card.dart';
+import 'components/shipping_address_view.dart';
 
 class CartPage extends StatelessWidget {
   final CartController cartController = Get.find<CartController>();
@@ -43,43 +43,23 @@ class CartPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Shipping Address Section
             Obx(() {
               if (cartController.items.isEmpty) {
                 return const SizedBox.shrink();
               }
-              final address =
-                  Get.find<ShippingAddressController>().primaryAddress.value;
+              final address = cartController.primaryAddress.value;
               return address == null
                   ? SizedBox()
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      child: AppCard(
-                        elevation: 2.0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                color: context.kPrimaryColor,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  address.address,
-                                  style: context.body1,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                  : // Shipping Address Section
+                    ShippingAddressView(
+                      address: address,
+                      onChange: () async {
+                        await PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: ShippingAddressScreen(),
+                        );
+                        cartController.reloadShippingAddress();
+                      },
                     );
             }),
             // Cart Items List
@@ -139,8 +119,7 @@ class CartPage extends StatelessWidget {
               if (cartController.items.isEmpty) {
                 return const SizedBox.shrink();
               }
-              final address = cartController.selectedAddress.value;
-              double shippingCost = address.isPrimary ? 15.0 : 25.0;
+              double shippingCost = 25.0;
               return Container(
                 margin: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
                 padding: const EdgeInsets.all(20),
@@ -161,17 +140,18 @@ class CartPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Total",
-                          style: TextStyle(color: Colors.grey, fontSize: 15),
+                        AppText(
+                          text: "Total",
+                          color: Colors.grey,
+                          fontSize: 15,
                         ),
                         Obx(
-                          () => Text(
-                            "\$${cartController.totalPrice.toStringAsFixed(2)}",
-                            style: context.h4?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: context.kPrimaryColor,
-                            ),
+                          () => AppText(
+                            text:
+                                "\$${cartController.totalPrice.toStringAsFixed(2)}",
+                            fontWeight: FontWeight.bold,
+                            color: context.kPrimaryColor,
+                            fontSize: 24,
                           ),
                         ),
                       ],
@@ -180,16 +160,16 @@ class CartPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Shipping",
-                          style: TextStyle(color: Colors.grey, fontSize: 15),
+                        AppText(
+                          text: "Shipping",
+                          color: Colors.grey,
+                          fontSize: 15,
                         ),
-                        Text(
-                          "\$${shippingCost.toStringAsFixed(2)}",
-                          style: context.h4?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: context.kPrimaryColor,
-                          ),
+                        AppText(
+                          text: "\$${shippingCost.toStringAsFixed(2)}",
+                          fontWeight: FontWeight.bold,
+                          color: context.kPrimaryColor,
+                          fontSize: 18,
                         ),
                       ],
                     ),
