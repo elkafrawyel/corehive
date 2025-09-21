@@ -1,11 +1,11 @@
 import 'package:corehive_store/app/config/extension/space_extension.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:corehive_store/app/presentation/screens/search/controller/search_controller.dart'
+    as ch;
 
 class SearchBar extends StatefulWidget {
-  final ValueChanged<String> onChanged;
-
-  const SearchBar({super.key, required this.onChanged});
+  const SearchBar({super.key});
 
   @override
   State<SearchBar> createState() => _SearchBarState();
@@ -69,6 +69,7 @@ class _SearchBarState extends State<SearchBar> {
                   isDense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
+                onChanged: (value) => ch.SearchController.to.search(value),
                 style: TextStyle(
                   color: context.kTextColor,
                   fontSize: 14,

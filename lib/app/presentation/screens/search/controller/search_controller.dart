@@ -3,6 +3,8 @@ import 'package:corehive_store/app/data/repositories/product_repository.dart';
 import 'package:corehive_store/app/data/models/product_model.dart';
 
 class SearchController extends GetxController {
+  static SearchController get to => Get.find();
+  void fetchResults() => _fetchResults();
   List<String> get categories => productRepository.getCategories();
 
   double get minPrice => 0;
@@ -24,18 +26,18 @@ class SearchController extends GetxController {
       updated.add(cat);
     }
     filters['category'] = updated;
-    _fetchResults();
+    update();
   }
 
   void setPriceRange(double min, double max) {
     filters['minPrice'] = min.round();
     filters['maxPrice'] = max.round();
-    _fetchResults();
+    update();
   }
 
   void setRating(double rating) {
     filters['minRating'] = rating;
-    _fetchResults();
+    update();
   }
 
   final ProductRepository productRepository;
@@ -43,7 +45,8 @@ class SearchController extends GetxController {
 
   var query = ''.obs;
   var filters = <String, dynamic>{}.obs;
-  var results = <Product>[].obs;
+  var results = <Product>[];
+  var isLoading = false.obs;
 
   void search(String value) {
     query.value = value;
@@ -61,7 +64,6 @@ class SearchController extends GetxController {
 
   void setFilter(String key, dynamic value) {
     if (key == 'category') {
-      // Multi-select: value is a String (category)
       final selected = filters['category'] ?? <String>[];
       List<String> updated = List<String>.from(selected);
       if (updated.contains(value)) {
@@ -73,7 +75,7 @@ class SearchController extends GetxController {
     } else {
       filters[key] = value;
     }
-    _fetchResults();
+    update();
   }
 
   void clearFilters() {
@@ -82,7 +84,13 @@ class SearchController extends GetxController {
   }
 
   void _fetchResults() {
-    results.value = _searchProducts(query.value, filters);
+    isLoading.value = true;
+    update();
+    Future.delayed(const Duration(seconds: 2), () {
+      results = _searchProducts(query.value, filters);
+      isLoading.value = false;
+      update();
+    });
   }
 
   List<Product> _searchProducts(String query, Map<String, dynamic> filters) {
@@ -98,11 +106,13 @@ class SearchController extends GetxController {
         (filters['category'] as List<String>).isNotEmpty) {
       final selectedCategories = filters['category'] as List<String>;
       products = products.where((p) {
-        // You may want to match category field if available, here we match title for demo
-        return selectedCategories.any(
-          (cat) => p.title.toLowerCase().contains(cat.toLowerCase()),
-        );
+        return selectedCategories.contains(p.category);
       }).toList();
+    }
+    // Rating filter
+    if (filters.containsKey('minRating') && filters['minRating'] != null) {
+      final minRating = filters['minRating'] as double;
+      products = products.where((p) => (p.rating ?? 0) >= minRating).toList();
     }
     // Add more filter logic as needed
     return products;

@@ -3,6 +3,7 @@ class Product {
   final String imageUrl;
   final String title;
   final String price;
+  final String category;
   final String? originalPrice;
   final double? rating;
   final int? reviewCount;
@@ -15,6 +16,7 @@ class Product {
     required this.imageUrl,
     required this.title,
     required this.price,
+    required this.category,
     this.originalPrice,
     this.rating,
     this.reviewCount,

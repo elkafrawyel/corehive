@@ -5,8 +5,7 @@ import 'package:corehive_store/app/presentation/screens/search/controller/search
 import 'package:get/get.dart';
 
 class FilterBottomSheet extends StatelessWidget {
-  final ch.SearchController controller;
-  const FilterBottomSheet({super.key, required this.controller});
+  const FilterBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +40,7 @@ class FilterBottomSheet extends StatelessWidget {
                 context,
               ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
             ),
-            CategoryChips(controller: controller),
+            CategoryChips(),
             const SizedBox(height: 20),
             Text(
               'Price Range',
@@ -49,7 +48,7 @@ class FilterBottomSheet extends StatelessWidget {
                 context,
               ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
             ),
-            PriceSlider(controller: controller),
+            PriceSlider(),
             const SizedBox(height: 20),
             Text(
               'Minimum Rating',
@@ -57,14 +56,14 @@ class FilterBottomSheet extends StatelessWidget {
                 context,
               ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
             ),
-            RatingChips(controller: controller),
+            RatingChips(),
             const SizedBox(height: 28),
             Row(
               children: [
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      controller.clearFilters();
+                      Get.find<ch.SearchController>().clearFilters();
                       Navigator.pop(context);
                     },
                     child: const Text('Clear'),
@@ -74,6 +73,8 @@ class FilterBottomSheet extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      final controller = Get.find<ch.SearchController>();
+                      controller.fetchResults();
                       Navigator.pop(context);
                     },
                     child: const Text('Apply'),
@@ -89,12 +90,12 @@ class FilterBottomSheet extends StatelessWidget {
 }
 
 class CategoryChips extends StatelessWidget {
-  final ch.SearchController controller;
-  const CategoryChips({super.key, required this.controller});
+  const CategoryChips({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      final controller = Get.find<ch.SearchController>();
       final categories = controller.categories;
       final selectedCategories = controller.selectedCategories;
       return Wrap(
@@ -122,12 +123,12 @@ class CategoryChips extends StatelessWidget {
 }
 
 class PriceSlider extends StatelessWidget {
-  final ch.SearchController controller;
-  const PriceSlider({super.key, required this.controller});
+  const PriceSlider({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      final controller = Get.find<ch.SearchController>();
       double min = controller.minPrice;
       double max = controller.maxPrice;
       double start = controller.selectedMinPrice;
@@ -166,12 +167,12 @@ class PriceSlider extends StatelessWidget {
 }
 
 class RatingChips extends StatelessWidget {
-  final ch.SearchController controller;
-  const RatingChips({super.key, required this.controller});
+  const RatingChips({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      final controller = Get.find<ch.SearchController>();
       final ratings = controller.ratings;
       final selectedRating = controller.selectedRating;
       return Wrap(
