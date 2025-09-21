@@ -29,7 +29,7 @@ class AppNetworkImage extends StatelessWidget {
     this.borderColor,
     this.borderWidth = 0,
     this.isCircular = false,
-    this.fallbackAsset = Res.logo,
+    this.fallbackAsset,
   });
 
   BoxDecoration _decoration({ImageProvider? image}) {
@@ -73,13 +73,8 @@ class AppNetworkImage extends StatelessWidget {
       width: width,
       height: height,
       decoration: _decoration(
-        image: fallbackAsset != null
-            ? AssetImage(fallbackAsset!) as ImageProvider
-            : null,
+        image: AssetImage(fallbackAsset ?? Res.logo()) as ImageProvider,
       ),
-      child: fallbackAsset == null
-          ? Icon(Icons.broken_image, size: width / 2, color: Colors.grey)
-          : null,
     );
   }
 

@@ -102,16 +102,17 @@ class BrandsSection extends StatelessWidget {
               ),
             ],
           ),
-          
+
           12.ph,
-          
+
           SizedBox(
             height: 150,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: brands.length,
               separatorBuilder: (_, __) => 12.pw,
-              itemBuilder: (context, index) => _buildBrandCard(context, brands[index]),
+              itemBuilder: (context, index) =>
+                  _buildBrandCard(context, brands[index]),
             ),
           ),
         ],
@@ -123,8 +124,7 @@ class BrandsSection extends StatelessWidget {
     return SizedBox(
       width: 100,
       child: AppCard(
-        backgroundColor: Colors.white,
-        borderColor: Colors.transparent,
+        backgroundColor: context.kCardBackgroundColor,
         padding: const EdgeInsets.all(12),
         onTap: () {
           // Navigate to brand page
@@ -149,7 +149,7 @@ class BrandsSection extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 // Verified badge
                 if (brand.isVerified)
                   Positioned(
@@ -172,9 +172,9 @@ class BrandsSection extends StatelessWidget {
                   ),
               ],
             ),
-            
+
             8.ph,
-            
+
             // Brand name
             AppText(
               text: brand.name,
@@ -184,18 +184,14 @@ class BrandsSection extends StatelessWidget {
               centerText: true,
               maxLines: 1,
             ),
-            
+
             4.ph,
-            
+
             // Rating and product count
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.star,
-                  color: context.kPrimaryColor,
-                  size: 12,
-                ),
+                Icon(Icons.star, color: context.kPrimaryColor, size: 12),
                 2.pw,
                 AppText(
                   text: brand.rating.toString(),
@@ -204,9 +200,9 @@ class BrandsSection extends StatelessWidget {
                 ),
               ],
             ),
-            
+
             2.ph,
-            
+
             AppText(
               text: '${brand.productCount} products',
               fontSize: 9,

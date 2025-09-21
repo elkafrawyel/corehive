@@ -1,5 +1,6 @@
 import 'package:corehive_store/app/presentation/screens/main/pages/home/controller/home_controller.dart';
 import 'package:corehive_store/app/presentation/screens/search/search_screen.dart';
+import 'package:corehive_store/app/presentation/screens/wishlist/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:corehive_store/app/config/extension/space_extension.dart';
@@ -9,8 +10,6 @@ import 'package:corehive_store/app/presentation/widgets/app_network_image.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
-
-import '../../../../shipping_address/controller/shipping_address_controller.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -47,7 +46,7 @@ class HomeHeader extends StatelessWidget {
                           backgroundColor: context.kPrimaryColor.withValues(
                             alpha: 0.1,
                           ),
-                          child: const AppNetworkImage(
+                          child: AppNetworkImage(
                             imageUrl:
                                 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
                             width: 40,
@@ -92,7 +91,13 @@ class HomeHeader extends StatelessWidget {
                       _buildActionButton(
                         context,
                         icon: Iconsax.heart_outline,
-                        onTap: () {},
+                        onTap: () {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: WishlistScreen(),
+                            withNavBar: true,
+                          );
+                        },
                       ),
                       8.pw,
                       _buildActionButton(

@@ -39,6 +39,8 @@ extension ThemeExtensions on BuildContext {
 
   TextStyle? get button => Theme.of(this).textTheme.labelLarge;
 
+  Color get kCardBackgroundColor => _dynamicColors.kCardBackgroundColor;
+
   // * PrimaryTextTheme
   TextStyle? get pH1 => Theme.of(this).primaryTextTheme.displayLarge;
   TextStyle? get pH2 => Theme.of(this).primaryTextTheme.displayMedium;

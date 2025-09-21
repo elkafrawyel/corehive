@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../../../widgets/app_text.dart';
+import '../../../../widgets/product_cards/product_card.dart';
 import 'components/home_banner.dart';
 import 'components/home_categories.dart';
 import 'components/home_header.dart';
 import 'components/horizontal_listview.dart';
-import 'components/product_card.dart';
 import 'components/section_title.dart';
 import 'components/flash_deals_section.dart';
 import 'components/quick_actions_section.dart';
@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: GetBuilder<HomeController>(
           builder: (homeController) {
             return CustomScrollView(
@@ -98,13 +99,13 @@ class _HomePageState extends State<HomePage>
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   sliver: SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: .58,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                        ),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 350,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      childAspectRatio:
+                          0.6, // <-- controls height (width / height)
+                    ),
                     delegate: SliverChildBuilderDelegate((context, index) {
                       final product = homeController.products[index];
                       return ProductCard(product: product);

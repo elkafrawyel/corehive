@@ -104,7 +104,7 @@ class QuickActionsSection extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       child: AppCard(
-        backgroundColor: Colors.white,
+        backgroundColor: context.kCardBackgroundColor,
         borderColor: Colors.transparent,
         padding: const EdgeInsets.all(16),
         onTap: () {

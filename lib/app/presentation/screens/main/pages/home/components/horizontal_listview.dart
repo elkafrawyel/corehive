@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../data/models/product_model.dart';
-import 'product_card.dart';
+import '../../../../../widgets/product_cards/product_card.dart';
 
 class HorizontalListView extends StatelessWidget {
   final List<Product> products;

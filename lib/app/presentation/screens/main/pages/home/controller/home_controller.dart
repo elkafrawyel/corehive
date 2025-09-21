@@ -5,6 +5,7 @@ import '../../../../../../data/repositories/product_repository.dart';
 class HomeController extends GetxController {
   final ProductRepository productRepo;
   HomeController({required this.productRepo});
+  static HomeController get to => Get.find<HomeController>();
 
   var products = <Product>[].obs;
   var featuredProducts = <Product>[].obs;
@@ -19,7 +20,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    products.assignAll(productRepo.getAllProducts());
+    products.assignAll(productRepo.allProducts);
     featuredProducts.assignAll(productRepo.getFeaturedProducts());
     bestSellers.assignAll(productRepo.getBestSellers());
     flashDeals.assignAll(productRepo.getFlashDeals());
@@ -29,4 +30,20 @@ class HomeController extends GetxController {
     subCategoriesMap.assignAll(productRepo.getSubCategoriesMap());
     deliveryAddress.value = '123 Main St, City, Country';
   }
+
+  void refreshProducts() {
+    products.assignAll(productRepo.allProducts);
+  }
+
+  void setDeliveryAddress(String address) {
+    deliveryAddress.value = address;
+  }
+
+  bool get isNoProducts => products.isEmpty;
+  bool get isNoFeaturedProducts => featuredProducts.isEmpty;
+  bool get isNoBestSellers => bestSellers.isEmpty;
+  bool get isNoFlashDeals => flashDeals.isEmpty;
+  bool get isNoBrands => brands.isEmpty;
+  bool get isNoRecentlyViewed => recentlyViewed.isEmpty;
+  bool get isNoCategories => categories.isEmpty;
 }

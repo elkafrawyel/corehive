@@ -28,94 +28,92 @@ class ProfileLoggedInPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              // --- Profile Header ---
-              AppNetworkImage(
-                imageUrl: 'https://i.pravatar.cc/300',
-                width: 100,
-                height: 100,
-                isCircular: true,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            // --- Profile Header ---
+            AppNetworkImage(
+              imageUrl: 'https://i.pravatar.cc/300',
+              width: 100,
+              height: 100,
+              isCircular: true,
+            ),
+            const SizedBox(height: 16),
+            AppText(
+              text: 'John Doe',
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: context.kTextColor,
+            ),
+            AppText(
+              text: 'johndoe@email.com',
+              fontSize: 16,
+              color: context.kHintTextColor,
+            ),
+            const SizedBox(height: 32),
+
+            // --- Shipping Address Tile ---
+            ProfileTile(
+              icon: Icons.location_on,
+              title: "Shipping Address",
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: ShippingAddressScreen(),
+                  withNavBar: true,
+                );
+              },
+            ),
+
+            // --- Profile Tiles ---
+            ProfileTile(
+              icon: Icons.language,
+              title: "Change Language",
+              onTap: () {},
+            ),
+            // Interactive Tiles
+            GetBuilder<ThemeController>(
+              builder: (controller) => ProfileTileToggle(
+                icon: Icons.dark_mode,
+                title: "Theme",
+                value: controller.isDarkMode.value,
+                onChanged: (val) => controller.toggleAppTheme(),
               ),
-              const SizedBox(height: 16),
-              AppText(
-                text: 'John Doe',
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: context.kTextColor,
-              ),
-              AppText(
-                text: 'johndoe@email.com',
+            ),
+
+            ProfileTile(
+              icon: Icons.privacy_tip,
+              title: "Privacy Policy",
+              onTap: () {},
+            ),
+            ProfileTile(
+              icon: Icons.description,
+              title: "Terms & Conditions",
+              onTap: () {},
+            ),
+            ProfileTile(
+              icon: Icons.contact_mail,
+              title: "Contact Us",
+              onTap: () {},
+            ),
+
+            const Divider(height: 40),
+
+            // --- Logout ---
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: AppText(
+                text: 'Logout',
+                color: context.kErrorColor,
                 fontSize: 16,
-                color: context.kHintTextColor,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 32),
-
-              // --- Shipping Address Tile ---
-              ProfileTile(
-                icon: Icons.location_on,
-                title: "Shipping Address",
-                onTap: () {
-                  PersistentNavBarNavigator.pushNewScreen(
-                    context,
-                    screen: ShippingAddressScreen(),
-                    withNavBar: true,
-                  );
-                },
-              ),
-
-              // --- Profile Tiles ---
-              ProfileTile(
-                icon: Icons.language,
-                title: "Change Language",
-                onTap: () {},
-              ),
-              // Interactive Tiles
-              GetBuilder<ThemeController>(
-                builder: (controller) => ProfileTileToggle(
-                  icon: Icons.dark_mode,
-                  title: "Theme",
-                  value: controller.isDarkMode.value,
-                  onChanged: (val) => controller.toggleAppTheme(),
-                ),
-              ),
-
-              ProfileTile(
-                icon: Icons.privacy_tip,
-                title: "Privacy Policy",
-                onTap: () {},
-              ),
-              ProfileTile(
-                icon: Icons.description,
-                title: "Terms & Conditions",
-                onTap: () {},
-              ),
-              ProfileTile(
-                icon: Icons.contact_mail,
-                title: "Contact Us",
-                onTap: () {},
-              ),
-
-              const Divider(height: 40),
-
-              // --- Logout ---
-              ListTile(
-                leading: const Icon(Icons.logout, color: Colors.red),
-                title: AppText(
-                  text: 'Logout',
-                  color: context.kErrorColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-                onTap: () {
-                  Get.find<ProfileController>().logout();
-                },
-              ),
-            ],
-          ),
+              onTap: () {
+                Get.find<ProfileController>().logout();
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -37,21 +37,27 @@ class _HomeBannerState extends State<HomeBanner> {
 
   final List<BannerData> banners = [
     BannerData(
-      imageUrl: "https://images.unsplash.com/photo-1607082349566-187342175e2f",
+      imageUrl:
+          'https://wowslider.com/sliders/demo-25/data1/images/taj_mahal.jpg',
+
       title: "Summer Sale",
       subtitle: "Up to 70% off on all items",
       buttonText: "Shop Now",
       backgroundColor: const Color(0xFFFF6B6B),
     ),
     BannerData(
-      imageUrl: "https://images.unsplash.com/photo-1603899122634-f86d7a2d94da",
+      imageUrl:
+          'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+
       title: "New Collection",
       subtitle: "Fresh styles for this season",
       buttonText: "Explore",
       backgroundColor: const Color(0xFF4ECDC4),
     ),
     BannerData(
-      imageUrl: "https://images.unsplash.com/photo-1600488994374-4f67f34d8d61",
+      imageUrl:
+          'https://images.unsplash.com/photo-1521747116042-5a810fda9664?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+
       title: "Free Shipping",
       subtitle: "On orders over \$50",
       buttonText: "Learn More",
@@ -97,9 +103,10 @@ class _HomeBannerState extends State<HomeBanner> {
           PageView.builder(
             controller: _controller,
             itemCount: banners.length,
-            itemBuilder: (context, index) => _buildBannerCard(context, banners[index]),
+            itemBuilder: (context, index) =>
+                _buildBannerCard(context, banners[index]),
           ),
-          
+
           // Page indicators
           Positioned(
             bottom: 16,
@@ -119,7 +126,7 @@ class _HomeBannerState extends State<HomeBanner> {
               ),
             ),
           ),
-          
+
           // Navigation arrows
           Positioned(
             left: 8,
@@ -129,6 +136,7 @@ class _HomeBannerState extends State<HomeBanner> {
               child: _buildNavButton(
                 context,
                 icon: Icons.arrow_back_ios,
+
                 onTap: () {
                   if (_currentIndex > 0) {
                     _controller.previousPage(
@@ -140,7 +148,7 @@ class _HomeBannerState extends State<HomeBanner> {
               ),
             ),
           ),
-          
+
           Positioned(
             right: 8,
             top: 0,
@@ -188,7 +196,7 @@ class _HomeBannerState extends State<HomeBanner> {
                 fit: BoxFit.cover,
               ),
             ),
-            
+
             // Gradient overlay
             Positioned.fill(
               child: Container(
@@ -204,7 +212,7 @@ class _HomeBannerState extends State<HomeBanner> {
                 ),
               ),
             ),
-            
+
             // Content
             Positioned(
               left: 20,
@@ -231,10 +239,15 @@ class _HomeBannerState extends State<HomeBanner> {
                     width: 120,
                     child: AppButton(
                       text: banner.buttonText,
-                      fontSize: MediaQuery.sizeOf(context).width > 400 ? 14 : 12,
+                      fontSize: MediaQuery.sizeOf(context).width > 400
+                          ? 14
+                          : 12,
                       backgroundColor: context.kPrimaryColor,
                       textColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
+                      ),
                       onPressed: banner.onTap ?? () {},
                     ),
                   ),
@@ -256,7 +269,7 @@ class _HomeBannerState extends State<HomeBanner> {
       width: 36,
       height: 36,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.9),
+        color: context.kPrimaryColor.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
@@ -271,11 +284,7 @@ class _HomeBannerState extends State<HomeBanner> {
         child: InkWell(
           borderRadius: BorderRadius.circular(18),
           onTap: onTap,
-          child: Icon(
-            icon,
-            color: context.kTextColor,
-            size: 18,
-          ),
+          child: Icon(icon, color: context.kColorOnPrimary, size: 18),
         ),
       ),
     );

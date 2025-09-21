@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:corehive_store/app/data/models/product_model.dart';
-import 'package:corehive_store/app/presentation/screens/search/components/search_product_card.dart';
+
+import '../../../widgets/product_cards/search_product_card.dart';
 
 class ProductListView extends StatelessWidget {
   final List<Product> products;

@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: Image.asset(Res.logo, width: 150, height: 150)
+        child: Image.asset(Res.logo(), width: 150, height: 150)
             .animate()
             .scale(
               begin: const Offset(0.5, 0.5),

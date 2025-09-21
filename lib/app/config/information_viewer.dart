@@ -5,7 +5,6 @@ import 'package:oktoast/oktoast.dart' as ok_toast;
 
 import '../presentation/widgets/app_text.dart';
 
-
 abstract class InformationViewer {
   /// Show a generic toast
   static void showToast({
@@ -20,7 +19,10 @@ abstract class InformationViewer {
       duration: const Duration(seconds: 4),
       backgroundColor: backgroundColor,
       position: ok_toast.ToastPosition.bottom,
-      textStyle: TextStyle(fontSize: fontSize, color: textColor ?? Colors.white),
+      textStyle: TextStyle(
+        fontSize: fontSize,
+        color: textColor ?? Colors.white,
+      ),
     );
   }
 
@@ -52,42 +54,53 @@ abstract class InformationViewer {
     );
   }
 
-  /// Show a material SnackBar using Get.context
   static void showSnackBar({
     required String msg,
     int duration = 5,
     Color? bgColor,
+    IconData? icon,
   }) {
-    final BuildContext? context = Get.context;
+    final BuildContext? context = Get.overlayContext;
     if (context == null) return;
+
+    final textColor = Colors.white;
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: bgColor ?? context.kPrimaryColor,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        animation: CurvedAnimation(
+          parent: AnimationController(
+            vsync: ScaffoldMessenger.of(context),
+            duration: const Duration(milliseconds: 400),
+          ),
+          curve: Curves.easeInOutCubic,
         ),
-        content: AppText(
-          text: msg,
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-          maxLines: 3,
+        content: Row(
+          children: [
+            if (icon != null)
+              Icon(icon, color: textColor, size: 20).paddingOnly(right: 8),
+            Expanded(
+              child: AppText(
+                text: msg,
+                color: textColor,
+                fontWeight: FontWeight.w500,
+                maxLines: 3,
+              ),
+            ),
+          ],
         ),
         duration: Duration(seconds: duration),
         dismissDirection: DismissDirection.down,
         action: SnackBarAction(
           label: 'ok'.tr,
-          textColor: Colors.white,
+          textColor: textColor,
           onPressed: () {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           },
         ),
-      ),
-      snackBarAnimationStyle: AnimationStyle(
-        curve: Curves.fastEaseInToSlowEaseOut,
-        duration: const Duration(milliseconds: 1000),
       ),
     );
   }

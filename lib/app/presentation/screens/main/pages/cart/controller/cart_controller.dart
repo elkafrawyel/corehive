@@ -1,3 +1,4 @@
+import 'package:corehive_store/app/config/information_viewer.dart';
 import 'package:corehive_store/app/data/repositories/shipping_address_repository.dart';
 import 'package:get/get.dart';
 import '../../../../../../data/models/cart_model.dart';
@@ -25,9 +26,17 @@ class CartController extends GetxController {
   void addItem(CartModel item) {
     final existing = items.firstWhereOrNull((e) => e.id == item.id);
     if (existing != null) {
-      increase(existing);
+      if (item.quantity.value != existing.quantity.value) {
+        existing.quantity.value = item.quantity.value;
+        cartRepository.updateCartItem(existing, existing);
+        items.value = cartRepository.getAllCartItems();
+        InformationViewer.showSuccessToast(msg: 'Product quantity updated.');
+        return;
+      }
+      InformationViewer.showSnackBar(msg: 'Product already in cart.');
     } else {
       cartRepository.addCartItem(item);
+      InformationViewer.showSuccessToast(msg: 'Product Added to cart.');
       items.value = cartRepository.getAllCartItems();
     }
   }

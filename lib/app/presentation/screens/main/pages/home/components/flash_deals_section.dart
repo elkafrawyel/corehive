@@ -165,8 +165,7 @@ class _FlashDealsSectionState extends State<FlashDealsSection> {
 
   Widget _buildDealCard(BuildContext context, FlashDealData deal) {
     return AppCard(
-      backgroundColor: Colors.white,
-      borderColor: Colors.transparent,
+      backgroundColor: context.kCardBackgroundColor,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -13,6 +13,7 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color kErrorColor;
   final Color kSuccessColor;
   final Color kTextFieldColor;
+  final Color kCardBackgroundColor;
 
   /// dynamic colors
   const AppColors({
@@ -25,6 +26,7 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.kErrorColor,
     required this.kSuccessColor,
     required this.kTextFieldColor,
+    required this.kCardBackgroundColor,
   });
 
   factory AppColors.fromColors({
@@ -37,6 +39,7 @@ class AppColors extends ThemeExtension<AppColors> {
     required String errorColor,
     required String successColor,
     required String textFieldColor,
+    required String cardBackgroundColor,
   }) {
     return AppColors(
       kPrimaryColor: primaryColor.contains('#')
@@ -66,6 +69,9 @@ class AppColors extends ThemeExtension<AppColors> {
       kTextFieldColor: textFieldColor.contains('#')
           ? HexColor.fromHex(textFieldColor)
           : RgbColor.fromRgbString(textFieldColor),
+      kCardBackgroundColor: cardBackgroundColor.contains('#')
+          ? HexColor.fromHex(cardBackgroundColor)
+          : RgbColor.fromRgbString(cardBackgroundColor),
     );
   }
 
@@ -80,6 +86,7 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? errorColor,
     Color? successColor,
     Color? textFieldColor,
+    Color? cardBackgroundColor,
   }) {
     return AppColors(
       kPrimaryColor: primaryColor ?? kPrimaryColor,
@@ -91,6 +98,7 @@ class AppColors extends ThemeExtension<AppColors> {
       kErrorColor: errorColor ?? kErrorColor,
       kSuccessColor: successColor ?? kSuccessColor,
       kTextFieldColor: textFieldColor ?? kTextFieldColor,
+      kCardBackgroundColor: cardBackgroundColor ?? kCardBackgroundColor,
     );
   }
 
@@ -117,11 +125,16 @@ class AppColors extends ThemeExtension<AppColors> {
       kErrorColor: Color.lerp(kErrorColor, other.kErrorColor, t)!,
       kSuccessColor: Color.lerp(kSuccessColor, other.kSuccessColor, t)!,
       kTextFieldColor: Color.lerp(kTextFieldColor, other.kTextFieldColor, t)!,
+      kCardBackgroundColor: Color.lerp(
+        kCardBackgroundColor,
+        other.kCardBackgroundColor,
+        t,
+      )!,
     );
   }
 
   static AppColors lightModeColors = const AppColors(
-    kPrimaryColor: Color(0xFFFFC107),
+    kPrimaryColor: Color(0xFFB8860B),
     // Vibrant yellow (primary)
     kSecondaryColor: Color(0xFFFF6F00),
     // Deep orange accent
@@ -138,10 +151,11 @@ class AppColors extends ThemeExtension<AppColors> {
     kSuccessColor: Color(0xFF388E3C),
     // Balanced green for success
     kTextFieldColor: Color(0xFFF5F5F5), // Light neutral input fields
+    kCardBackgroundColor: Color(0xFFFFFFFF), // Card background (white)
   );
 
   static AppColors darkModeColors = const AppColors(
-    kPrimaryColor: Color(0xFFFFC107),
+    kPrimaryColor: Color(0xFFB8860B),
     // Yellow primary
     kSecondaryColor: Color(0xFFFFA000),
     // Soft orange accent
@@ -149,7 +163,7 @@ class AppColors extends ThemeExtension<AppColors> {
     // Dark background
     kTextColor: Color(0xFFE0E0E0),
     // Light gray text
-    kColorOnPrimaryColor: Color(0xFF1E1E1E),
+    kColorOnPrimaryColor: Color(0xFFFFFFFF),
     // Text on yellow
     kHintColor: Color(0xFFB0B0B0),
     // Light gray for hints
@@ -158,5 +172,6 @@ class AppColors extends ThemeExtension<AppColors> {
     kSuccessColor: Color(0xFF66BB6A),
     // Soft green
     kTextFieldColor: Color(0xFF1E1E1E), // Dark input fields
+    kCardBackgroundColor: Color(0xFF232323), // Card background (dark gray)
   );
 }
