@@ -28,7 +28,7 @@ class WishlistProductCard extends StatelessWidget {
         navigateWithAnimation(
           context,
           ProductDetailsScreen(
-            product: product,
+            productId: product.id,
             heroTag: heroTag,
             heroTagTitle: heroTagTitle,
           ),

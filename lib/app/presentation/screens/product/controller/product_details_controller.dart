@@ -10,10 +10,16 @@ import '../../../../data/models/product_model.dart';
 import '../../wishlist/controller/wishlist_controller.dart';
 
 class ProductDetailsController extends GetxController {
-  final Product product;
+  final String productId;
+  Product? product;
   final ProductRepository productRepo;
+
   static ProductDetailsController get to => Get.find();
-  ProductDetailsController({required this.product, required this.productRepo});
+
+  ProductDetailsController({
+    required this.productId,
+    required this.productRepo,
+  });
 
   RxInt selectedImageIndex = 0.obs;
   RxInt selectedQuantity = 1.obs;
@@ -21,8 +27,14 @@ class ProductDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    product.isWishlisted = productRepo.isWishlisted(product.id);
-    AppLogger.log('isWishlisted: ${product.isWishlisted}', useGetX: true);
+    loadProduct();
+  }
+
+  loadProduct() {
+    product = productRepo.getProductById(productId);
+    if (product == null) return;
+    product!.isWishlisted = productRepo.isWishlisted(product!.id);
+    AppLogger.log('isWishlisted: ${product!.isWishlisted}', useGetX: true);
   }
 
   void _addToWishlist(Product product) {
@@ -50,20 +62,24 @@ class ProductDetailsController extends GetxController {
   }
 
   void toggleWishlist() {
-    if (product.isWishlisted) {
-      _removeFromWishlist(product);
+    if(product==null)return;
+
+    if (product!.isWishlisted) {
+      _removeFromWishlist(product!);
     } else {
-      _addToWishlist(product);
+      _addToWishlist(product!);
     }
   }
 
   void addToCartWithQuantity() {
+    if(product==null)return;
+
     CartController.to.addItem(
       CartModel(
-        id: product.id,
-        productName: product.title,
-        price: double.parse(product.price),
-        productImage: product.imageUrl,
+        id: product!.id,
+        productName: product!.title,
+        price: double.parse(product!.price),
+        productImage: product!.imageUrl,
         quantity: selectedQuantity.value,
         shippingCost: 15.0,
       ),

@@ -6,7 +6,7 @@ import '../controller/product_details_controller.dart';
 
 class ImageSliderSection extends StatelessWidget {
   final Product product;
-  final String heroTag;
+  final String? heroTag;
   const ImageSliderSection({
     super.key,
     required this.product,
@@ -26,7 +26,7 @@ class ImageSliderSection extends StatelessWidget {
               ? product.images![index]
               : product.imageUrl;
           return Hero(
-            tag: heroTag,
+            tag: heroTag??'',
             child: AppNetworkImage(imageUrl: imageUrl),
           );
         },

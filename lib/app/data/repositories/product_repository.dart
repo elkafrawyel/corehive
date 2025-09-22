@@ -1,4 +1,5 @@
 import 'package:corehive_store/app/config/helpers/logging_helper.dart';
+import 'package:get/get.dart';
 
 import '../models/product_model.dart';
 import '../../config/clients/api/api_result.dart';
@@ -445,5 +446,9 @@ class ProductRepository {
       ],
       'Pet Supplies': ['Food', 'Toys', 'Grooming', 'Beds', 'Health'],
     };
+  }
+
+  Product? getProductById(String productId) {
+    return allProducts.firstWhereOrNull((p) => p.id == productId);
   }
 }

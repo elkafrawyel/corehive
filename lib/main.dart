@@ -1,3 +1,4 @@
+
 import 'package:corehive_store/app/config/theme/color_extension.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -17,6 +18,7 @@ void main() async {
   runApp(CoreHiveStoreApp());
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 }
+
 
 class CoreHiveStoreApp extends StatelessWidget {
   CoreHiveStoreApp({super.key});

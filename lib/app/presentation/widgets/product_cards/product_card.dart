@@ -35,7 +35,7 @@ class _ProductCardState extends State<ProductCard> {
     final iconColor = context.kPrimaryColor;
     final product = widget.product;
     return SizedBox(
-      width: widget.isInHorizontalList ? 150 : double.infinity,
+      width: widget.isInHorizontalList ? 160 : double.infinity,
       child: AppCard(
         backgroundColor: context.kCardBackgroundColor,
         padding: const EdgeInsets.all(8),
@@ -43,7 +43,7 @@ class _ProductCardState extends State<ProductCard> {
           navigateWithAnimation(
             context,
             ProductDetailsScreen(
-              product: product,
+              productId: product.id,
               heroTag: heroTag,
               heroTagTitle: heroTagTitle,
             ),

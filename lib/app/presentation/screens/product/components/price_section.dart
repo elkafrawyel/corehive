@@ -4,7 +4,7 @@ import '../../../widgets/app_text.dart';
 
 class PriceSection extends StatelessWidget {
   final Product product;
-  final String heroTagTitle;
+  final String? heroTagTitle;
   const PriceSection({
     super.key,
     required this.product,
@@ -17,7 +17,7 @@ class PriceSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Hero(
-          tag: heroTagTitle,
+          tag: heroTagTitle??'',
           child: AppText(
             text: product.title,
             maxLines: 5,
