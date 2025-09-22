@@ -1,4 +1,5 @@
 import 'package:corehive_store/app/presentation/screens/main/pages/home/controller/home_controller.dart';
+import 'package:corehive_store/app/presentation/screens/notifications/notifications_screen.dart';
 import 'package:corehive_store/app/presentation/screens/search/search_screen.dart';
 import 'package:corehive_store/app/presentation/screens/wishlist/wishlist_screen.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,13 @@ class HomeHeader extends StatelessWidget {
                       _buildActionButton(
                         context,
                         icon: Iconsax.notification_outline,
-                        onTap: () {},
+                        onTap: () {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: NotificationsScreen(),
+                            withNavBar: true,
+                          );
+                        },
                         badge: true,
                         badgeCount: 10,
                       ),

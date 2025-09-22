@@ -75,4 +75,17 @@ class DateHelper {
     }
     return null;
   }
+
+  String getDateFromDateString(String? dateString, {DateFormat? dateFormat}) {
+    if (dateString == null) {
+      return '';
+    } else {
+      return DateFormat(
+        dateFormat?.pattern ?? DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY,
+        StorageClient().getAppLanguage(),
+      ).format(
+        DateTime.parse(dateString),
+      );
+    }
+  }
 }

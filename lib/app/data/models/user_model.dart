@@ -1,4 +1,4 @@
-import '../../domain/entities/user.dart';
+import 'user.dart';
 
 class UserModel extends User {
   final String? image;
