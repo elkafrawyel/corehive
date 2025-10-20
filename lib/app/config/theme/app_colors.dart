@@ -155,23 +155,25 @@ class AppColors extends ThemeExtension<AppColors> {
   );
 
   static AppColors darkModeColors = const AppColors(
-    kPrimaryColor: Color(0xFFB8860B),
-    // Yellow primary
-    kSecondaryColor: Color(0xFFFFA000),
-    // Soft orange accent
-    kBackgroundColor: Color(0xFF121212),
-    // Dark background
-    kTextColor: Color(0xFFE0E0E0),
-    // Light gray text
+    // Dark Mode primary: brighter green for better contrast
+    kPrimaryColor: Color(0xFF3FA34D),
+    // Secondary: slightly lighter green for visibility
+    kSecondaryColor: Color(0xFF9ED56A),
+    // Background: deep dark, reduces eye strain
+    kBackgroundColor: Color(0xFF121A2F),
+    // On Surface (High-Emphasis Text): almost white
+    kTextColor: Color(0xFFFFFFFF),
+    // On Primary: white for strong contrast
     kColorOnPrimaryColor: Color(0xFFFFFFFF),
-    // Text on yellow
-    kHintColor: Color(0xFFB0B0B0),
-    // Light gray for hints
-    kErrorColor: Color(0xFFEF5350),
-    // Soft red
-    kSuccessColor: Color(0xFF66BB6A),
-    // Soft green
-    kTextFieldColor: Color(0xFF1E1E1E), // Dark input fields
-    kCardBackgroundColor: Color(0xFF232323), // Card background (dark gray)
+    // On Surface Variant (Medium-Emphasis Text): light gray
+    kHintColor: Color(0xB3FFFFFF), // 70% opacity
+    // Error: soft red, visible on dark background
+    kErrorColor: Color(0xFFFF6B6B),
+    // Success: bright green for readability
+    kSuccessColor: Color(0xFF4CAF50),
+    // Text field fill (Surface): dark gray for inputs
+    kTextFieldColor: Color(0xFF1E1E1E),
+    // Surface (cards, app bars): dark but slightly lighter than background
+    kCardBackgroundColor: Color(0xFF1B2438),
   );
 }

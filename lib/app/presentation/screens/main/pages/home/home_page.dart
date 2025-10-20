@@ -100,11 +100,10 @@ class _HomePageState extends State<HomePage>
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   sliver: SliverGrid(
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 350,
+                      maxCrossAxisExtent: ProductCard.height + 20,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
-                      childAspectRatio:
-                          0.6, // <-- controls height (width / height)
+                      mainAxisExtent: ProductCard.height,
                     ),
                     delegate: SliverChildBuilderDelegate((context, index) {
                       final product = homeController.products[index];

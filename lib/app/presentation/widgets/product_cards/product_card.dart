@@ -15,6 +15,7 @@ import '../../../data/models/product_model.dart';
 class ProductCard extends StatefulWidget {
   final Product product;
   final bool isInHorizontalList;
+  static double height = 280;
 
   const ProductCard({
     super.key,
@@ -35,7 +36,9 @@ class _ProductCardState extends State<ProductCard> {
     final iconColor = context.kPrimaryColor;
     final product = widget.product;
     return SizedBox(
-      width: widget.isInHorizontalList ? 160 : double.infinity,
+      width:
+          MediaQuery.sizeOf(context).width /
+          (widget.isInHorizontalList ? 2.4 : 1),
       child: AppCard(
         backgroundColor: context.kCardBackgroundColor,
         padding: const EdgeInsets.all(8),
@@ -57,8 +60,10 @@ class _ProductCardState extends State<ProductCard> {
                 Hero(
                   tag: heroTag,
                   child: AppNetworkImage(
-                    height: widget.isInHorizontalList ? 130 : 200,
-                    width: widget.isInHorizontalList ? 130 : double.infinity,
+                    height: ProductCard.height / 2,
+                    width:
+                        MediaQuery.sizeOf(context).width /
+                        (widget.isInHorizontalList ? 2.4 : 1),
                     imageUrl: product.imageUrl,
                     fit: BoxFit.cover,
                     radius: 12,
